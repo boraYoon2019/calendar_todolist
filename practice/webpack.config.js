@@ -58,12 +58,22 @@ module.exports = (webpackEnv) => {
 						name: '[name].[hash:8].[ext]',
 					},
 				},
-				{
-					test: [/\.css$/],
-					loader: 'css-loader',
-				},
-			],
+ {
+                test: /\.css$/,
+                use: [
+                    {loader: 'style-loader'},
+                    {loader: 'css-loader',
+                    options: { url: false } // tell css-loader to not package images referenced in css. perhaps re-activate this for base64 injection
+                    },
+                ] // use
+            }
+      ],
 		},
+
+    resolve: {
+        modules: ['node_modules'],
+        extensions: ['.js', '.json', '.jsx', '.css'],
+    },
 
 		// public/index.html을 build/ 로 옮겨주면서 번들 결과물을 script태크로 포함시키는 플러그인
 		// template 옵션을 사용하지 않으면 webpack이 자체적으로 html을 만든다.
