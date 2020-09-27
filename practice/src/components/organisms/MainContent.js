@@ -1,8 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import BigCalendar from '../molecules/BigCalendar';
-import Charts from '../molecules/Charts';
-
 const Div = styled.div`
 	display: flex;
 	flex-flow: row wrap;
@@ -14,8 +11,7 @@ const Div = styled.div`
 function MainContent() {
 	return (
 			<Div>
-				<BigCalendar></BigCalendar>
-				<Charts></Charts>
+				
 			</Div>
 	);
 }

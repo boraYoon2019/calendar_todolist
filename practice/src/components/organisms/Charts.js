@@ -11,7 +11,6 @@ import {
 	Legend,
 	LabelList,
 } from 'recharts';
-import styled from 'styled-components';
 
 const data = [
 	{
@@ -61,8 +60,8 @@ class Example extends PureComponent {
 				<YAxis />
 				<Tooltip />
 				<Legend />
-				<Bar dataKey='7월' fill='#e5e5e5' minPointSize={5}></Bar>
-				<Bar dataKey='8월' fill='#e5e5e5' minPointSize={5}></Bar>
+				<Bar dataKey='7월' fill='#a4a4a4' minPointSize={5}></Bar>
+				<Bar dataKey='8월' fill='#a4a4a4' minPointSize={5}></Bar>
 				<Bar dataKey='9월' fill='#bbdefb' minPointSize={10}>
 					<LabelList dataKey='name' content={renderCustomizedLabel} />
 				</Bar>

@@ -71,7 +71,9 @@ module.exports = (webpackEnv) => {
 		},
 
     resolve: {
-        modules: ['node_modules'],
+        modules: [ 
+					path.join(__dirname, "src"),
+					'node_modules'],
         extensions: ['.js', '.json', '.jsx', '.css'],
     },
 
@@ -82,7 +84,7 @@ module.exports = (webpackEnv) => {
 		// localhost:3000에서, 즉 RAM에 개발 서버를 올려서 구동할 수 있도록 하는 devServer 세팅
 		devServer: {
 			port: 3000,
-
+			host: "borayoon2019.bora",
 			// 개발 환경에서 정적 파일을 제공하려는 경우 필요
 			contentBase: appPublic,
 			// 번들 작업 종료 시 자동으로 브라우저 창에 띄울지 선택

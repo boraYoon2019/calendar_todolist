@@ -1,10 +1,13 @@
 import React from 'react';
-import MainTemplate from './components/templates/MainTemplate';
+import MainPage from './components/pages/MainPage';
+import Modal from './components/templates/ModalTemplate';
+import styled from 'styled-components';
+import '!style-loader!css-loader!react-big-calendar/lib/css/react-big-calendar.css';
 
 function App() {
 	return (
 		<div>
-			<MainTemplate></MainTemplate>
+			<MainPage></MainPage>
 		</div>
 	);
 }
