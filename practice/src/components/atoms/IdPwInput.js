@@ -1,8 +1,37 @@
 import React from 'react';
 import styled from 'styled-components';
-import store from '../../store';
+import store from '../../modules/store';
 
-const InputTag = styled.input`
+// const tagContent = this.props.type==='id'
+// ? `	margin: 0.4em;
+// width: 100%;
+// height: 2.5em;
+// background-color: #eaf6ff;
+// border: none;
+// border-radius: 2px;
+// flex-grow: 3;
+// /* height: 1.5em; */
+
+// @media screen and (max-width: 411px) {
+// }` : 
+// `	margin: 0.4em;
+// width: 100%;
+// height: 2.5em;
+// background-color: #eaf6ff;
+// border: none;
+// border-radius: 2px;
+// flex-grow: 3;
+// /* height: 1.5em; */
+
+// @media screen and (max-width: 411px) {
+// }`;
+
+// const InputTag = styled.input`${tagContent}`;
+
+const InputTag = styled.input.attrs(props => ({
+  // we can define static props
+  type: props.type,
+}))`
 	margin: 0.4em;
   width: 100%;
 	height: 2.5em;
@@ -16,20 +45,10 @@ const InputTag = styled.input`
 	}
 `;
 
-class Input extends React.Component {
-
-	constructor(props) {
-		super(props); // React.Component의 생성자 메소드를 먼저 실행
-		this.state = {
-			// 이 컴포넌트의 초기 state 값 설정
-		};
-	}
-
-	render() {
-		return (
-      <InputTag type={this.props.type}></InputTag>
-		);
-	}
+function Input(props){
+	return (
+    <InputTag type={props.type}></InputTag>
+	);
 }
 
-export default Input;
+export default React.memo(Input);

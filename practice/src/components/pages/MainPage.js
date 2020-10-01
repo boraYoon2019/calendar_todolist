@@ -1,6 +1,5 @@
 import React from 'react';
 import MainTemplate from '../templates/MainTemplate';
-import store from '../../store';
 
 // 정의된 Template에 데이터를 넣어 뷰를 완성시키는 단계.
 // 클래스 시스템의 인스턴스, 객체의 구현체, 페이지 설계도로 그린 페이지 그 자체.

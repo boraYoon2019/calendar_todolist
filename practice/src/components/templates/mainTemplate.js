@@ -20,10 +20,12 @@ const MainTemp = styled.div`
 	z-index: -1;
 `;
 
-function MainTemplate() {
+function MainTemplate(props) {
+
+	// 해당 onButtonClick 에 로그인/로그아웃 했을 때의 function 전해준다.
 	return (
 		<MainTemp>
-			<Header />			
+			<Header/>			
 				<Div>					
 					<BigCalendar />
 					<Charts />
@@ -31,5 +33,4 @@ function MainTemplate() {
 		</MainTemp>
 	);
 }
-
 export default MainTemplate;

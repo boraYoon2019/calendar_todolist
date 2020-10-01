@@ -1,14 +1,14 @@
 import React from 'react';
 import MainPage from './components/pages/MainPage';
-import Modal from './components/templates/ModalTemplate';
-import styled from 'styled-components';
 import '!style-loader!css-loader!react-big-calendar/lib/css/react-big-calendar.css';
+import Modal from './components/templates/ModalTemplate';
 
 function App() {
 	return (
-		<div>
+		<>
 			<MainPage></MainPage>
-		</div>
+			<Modal></Modal>
+		</>
 	);
 }
 

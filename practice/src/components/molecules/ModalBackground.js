@@ -3,6 +3,10 @@ import styled from 'styled-components';
 
 const Background = styled.div`
   position: fixed;
+  display: ${props => props.display ? props.display : 'flex'};   
+	flex-flow: column nowrap;
+  align-items: center;
+  justify-content: center;  
   left: 0;
   top: 0;
   width: 100%;
@@ -15,7 +19,7 @@ const Background = styled.div`
 const ModalBackground = (props) => {
 	return (
       <Background>
-        {this.props.children}
+        {props.children}
       </Background>
 	);
 }

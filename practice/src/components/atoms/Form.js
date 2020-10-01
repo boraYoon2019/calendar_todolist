@@ -9,23 +9,14 @@ const form = styled.form`
 	}
 `;
 
-class Form extends React.Component {
-
-	constructor(props) {
-		super(props);
-		this.state = {
-		};
-  }
-
-	render() {
+function Form(props) {
 		return (
-			<form method={this.props.method} onSubmit={function(){
-        this.props.target
-      }.bind(this)}>
-        {this.props.children}
+			<form method={props.method} onSubmit={function(){
+        props.target
+      }}>
+        {props.children}
 			</form>
 		);
-	}
 }
 
 export default Form;

@@ -1,6 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-import Button from '../atoms/Button';
+import HeaderContent from '../molecules/HeaderContent';
+import { connect } from 'react-redux'
+
+// 액션 가져오기
+// import {setUserStat, changeStatus} from '../../modules/signInOrOut'
+import * as actions from '../../modules/signInOrOut';
+
 
 const Wrapper = styled.header`
   display: flex;
@@ -16,65 +22,79 @@ const Wrapper = styled.header`
   }
 `;
 
-const Title = styled.h1`
-  font-size: 4em;
-  margin: 0;
-  margin-left: 0.8em;
-
-  @media screen and (max-width: 768px) {
-    margin-left: 0.8em;
-    font-size: 3em;
-  }
-  @media screen and (max-width: 411px) {
-    margin-left: 0.6em;    
-    margin-right: 0.6em;
-    font-size: 2em;
-  }
-`;
-
-const Img = styled.img`
-  width: 20%;
-  max-width: 5em;
-`;
-
-const Span = styled.span`
-  display: flex;
-	flex-flow: row wrap;
-  justify-content: center;
-	align-items: center;
-`;
-
+// 컨테이너 컴포넌트. 리덕스 스토어의 상태를 조회하거나, 액션을 디스패치 할 수 있는 컴포넌트. 
+// HTML 태그들을 사용하지 않고 다른 프리젠테이셔널 컴포넌트를 불러와 사용.
 class Header extends React.Component {
 
-  constructor(props) {
-    super(props); // React.Component의 생성자 메소드를 먼저 실행
-    this.state = { // 이 컴포넌트의 state 설정
-      isLogin: false // 초기 값 설정
-    };
-    this.changeLoginStatus = this.changeLoginStatus.bind(this);
-  };
+	// 예전에 생성자 선언했었으나, 버전 업그레이드 후 생략 됨.
+  // constructor() {
+  //   super(); // React.Component의 생성자 메소드를 먼저 실행
+  //   this.state = { // 이 컴포넌트의 state 설정
+  //     isSignIn: false // 초기 값 설정
+  //   };
+  // }
+  
+  // 컴포넌트 내부의 state를 바꾸는 3가지 방식
+  // changeLoginStatus() {
+  //   const isSignIn = !this.state.isSignIn;
+  //   this.setState({
+  //     isSignIn: isSignIn
+  //   });
+  //   console.log('체인지');
+  // }
 
-  changeLoginStatus() {
-    const isLogin = !this.state.isLogin;
-    this.setState({
-      isLogin: isLogin
-    });
+  // changeLoginStatus() {
+  //   this.setState((prevState) => {
+  //     return { 
+  //       isSignIn: !prevState.isSignIn
+  //     }
+  //   });
+  // }
+  
+  // changeLoginStatus = () => {
+  //   this.setState((prevState) => {
+  //     return { 
+  //       isSignIn: !prevState.isSignIn
+  //     }
+  //   });
+  // };
+  
+  componentDidMount() {
+    console.log('Header Component did mount.');
+  }
+
+  shouldComponentUpdate() {    
+    console.log('Header Component should update.');
+    return true;
   }
 
   render(){
+    // 리덕스 관련 변수
+    const { setUserStat, changeStatus } = this.props;
+
     return  (
-      <div>
         <Wrapper>
-          <Img src='/Logo.png'></Img>
-          <Title>TodoList</Title>
-          <Span>
-            <Button color='primary' 
-            >SIGN IN</Button>
-          </Span>
+          <HeaderContent LoginButtonColor={
+            this.props.isSignIn===true? 'noPrimary' : 'primary'
+          } isSignIn={this.props.isSignIn} onButtonClick={
+            () => {
+              changeStatus();
+            }
+          }/>
         </Wrapper>
-      </div>
     );
   }
 }
 
-export default Header;
+
+const mapStateToProps = (state) => ({
+  isSignIn: state.signInOrOut.isSignIn,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  setUserStat: () => dispatch(actions.setUserStat()),
+  changeStatus: () => dispatch(actions.changeStatus()),
+});
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

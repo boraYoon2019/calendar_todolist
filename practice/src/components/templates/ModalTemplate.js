@@ -1,41 +1,42 @@
 import React from 'react';
 import styled from 'styled-components';
 import ModalBackground from '../molecules/ModalBackground';
-import ModalContent from '../organisms/ModalContent';
+import SiginingModal from '../organisms/SiginingModal';
+
+
+// 실제 Organisms들을 레이아웃이나 데이터 흐름을 연결합니다.
+// 클래스 시스템의 클래스로, 객체의 설계도, 페이지의 설계도입니다.
 
 const Template = styled.div`
-  position: relative;
-	flex-flow: column nowrap;
+  position: relative;  
   background-color: #fefefe;
-  top:0;
-  margin: 15% 35%;
   padding: 2.5em;
 	border: 2px solid #bbdefb;
   border-radius: 10px;
-	width: 30%;
-  height: 35%;
+  width: 100%;
+  max-width: 25vw;
+
+	@media screen and (max-width: 1024px) {
+    max-width: 35vw;
+  }
+  
+	@media screen and (max-width: 768px) {
+    max-width: 45vw;
+  }
 
 	@media screen and (max-width: 414px) {
-    margin: 15% 3%;
-    width: 75%;
-    height: 40%;
+    max-width: 75vw;
     padding: 1.8em;
 	}
 `;
         
 class ModalTemplate extends React.Component {
 
-	constructor(props) {
-		super(props);
-		this.state = {
-		};
-  }
-
 	render() {
 		return (
-      <ModalBackground>
+      <ModalBackground display='none'>
         <Template>
-          <ModalContent></ModalContent>
+          <SiginingModal state=''></SiginingModal>
         </Template>
       </ModalBackground>
 		);

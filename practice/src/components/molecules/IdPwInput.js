@@ -37,22 +37,13 @@ const Label = styled.span`
 // 	height: 1.5em;
 // `;
 
-class IdPwInput extends React.Component {
-
-	constructor(props) {
-		super(props);
-		this.state = {
-		};
-  }
-
-	render() {
-		return (
-			<Div>			
-				<Label>{this.props.type ==='id'? ' Email' : 'Password' }</Label>
-				<Input type={this.props.type} ></Input>
-			</Div>
-		);
-	}
+function IdPwInput(props) {
+	return (
+		<Div>			
+			<Label>{props.label}</Label>
+			<Input type={props.type} ></Input>
+		</Div>
+	);
 }
 
-export default IdPwInput;
+export default React.memo(IdPwInput);
