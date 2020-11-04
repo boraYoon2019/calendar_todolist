@@ -15,20 +15,21 @@ const Sizediv = styled.div`
 	}
 `;
 
-function ModalButtons(props) {
+function ModalButtons({status, goJoin, onSignUp, onSignIn}) {
   
-  switch(props.status) {
-    case 'signingUp':
+  switch(status) {
+    case 'SIGNNING_UP':
       return (
       <Sizediv>
-        <Button color='primary'>회원가입</Button>
+        <Button 
+          color='primary' type='submit' onClick={onSignUp}>Sign Up</Button>
       </Sizediv>
       );
     default: 
       return (
         <Sizediv>
-          <Button color='primary'>Join</Button>
-          <Button>Sign In</Button>
+          <Button color='primary' onClick={goJoin}>Join</Button>
+          <Button type='submit' onClick={onSignIn}>Sign In</Button>
         </Sizediv>
       )
   }

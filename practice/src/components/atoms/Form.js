@@ -1,22 +1,35 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const form = styled.form`
+const GeneralForm = styled.form`
+  height: 100%;
   width: 100%;
-	height: 100%;
-	
-	@media screen and (max-width: 411px) {
-	}
+`;
+// padding: 1.2em;
+const ListForm = styled.form`
+  display: flex;
+  width: 100%;
+  max-width: 37em;
+  height: 100%;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  align-items: center;
 `;
 
 function Form(props) {
+  if (props.inList==='true') {
 		return (
-			<form method={props.method} onSubmit={function(){
-        props.target
-      }}>
+      <ListForm onSubmit={props.onSubmit}>
+      {props.children}
+      </ListForm>
+    );
+  } else {
+    return (
+      <GeneralForm onSubmit={props.onSubmit}>
         {props.children}
-			</form>
-		);
+      </GeneralForm>
+    );
+  }
 }
 
 export default Form;

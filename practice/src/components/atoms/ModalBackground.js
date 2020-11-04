@@ -4,7 +4,6 @@ import styled from 'styled-components';
 const Background = styled.div`
   position: fixed;
   display: ${props => props.display ? props.display : 'flex'};   
-	flex-flow: column nowrap;
   align-items: center;
   justify-content: center;  
   left: 0;

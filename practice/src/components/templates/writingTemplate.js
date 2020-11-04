@@ -1,4 +1,24 @@
+import React from 'react';
+import Section from '../atoms/Section';
 
+function WritingTemplate(props) {
+	return (
+    <>
+      {props.headerSection}
 
-// 실제 Organisms들을 레이아웃이나 데이터 흐름을 연결합니다.
-// 클래스 시스템의 클래스로, 객체의 설계도, 페이지의 설계도입니다.
+      <Section name='main'>
+      {props.writingSection}
+      </Section>
+      
+      <Section>
+      {props.mainSection}
+      </Section>
+
+      <Section name='feedback'>
+      {props.feedbackSection}
+      </Section>
+		</>
+	);
+}
+
+export default WritingTemplate;

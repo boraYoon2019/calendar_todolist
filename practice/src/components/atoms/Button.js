@@ -3,21 +3,24 @@ import styled from 'styled-components';
 
 const Btn = styled.button`
 	outline: none;
-	width:7.5em;
-	max-width: 7.5em;
-	background: ${props => props.color === 'primary' ? 'white' : '#eaf6ff'};
-	color: #111;
-	font-size: 1em;
+	width:${props => props.width!==undefined? props.width : '7.5em'};
+	max-width: ${props => props.maxWidth!==undefined? props.maxWidth : '7.5em'};
+	background: ${props => props.color!==undefined && props.color==='primary' ? 'white' : '#ffe2e2'};
+	color: ${props => props.color!==undefined && props.color === 'primary' ? '#646363' : '#646363'};
+	font-size: 1em;	
+	font-weight: ${props => props.color!==undefined && props.color === 'primary' ? 550 : 600};
 	text-transform: uppercase;
-	margin: 0.4em 0.6em;
-	padding: 0.8em 1em;
-	border: ${props =>
-		props.color === 'primary' ? '2px solid #bbdefb' : '2px solid #eaf6ff'};
-	border-radius: 10px;
+	margin: ${props => props.margin!==undefined? props.margin : '0.4em 0.6em'};
+	padding: ${props => props.padding!==undefined? props.padding : '0.6em 1em'};
+	border: ${props => props.color!==undefined && props.color==='primary' ? '3px solid #ffe2e2' : '3px solid #fff'};
+	border-radius: ${props =>
+	props.borderRadius !== undefined ? props.borderRadius : '10px'};
 
   &:hover {
 		cursor: pointer;
-    background: #90caf9;
+		background: ${props => props.color!==undefined && props.color === 'primary' ? '#ffc7c7' : '#fff'};
+		/* #ffc7c7 */
+		box-shadow: 0px 0px 4px 2px #ffe2e2;
   }
 
 	@media screen and (max-width: 414px) {
@@ -27,39 +30,26 @@ const Btn = styled.button`
 	}
 `;
 
-class Button extends React.Component {
-	// 예전에 생성자 선언했었으나, 버전 업그레이드 후 생략 됨. this.props로 바로 사용 가능하다.
-	// constructor(props) {
-	// 	super(props); // React.Component의 생성자 메소드
-	// }
-	// constructor() {
-  //   super(); // React.Component의 생성자 메소드
-  // }
-  componentDidMount() {
-    console.log('Button Component did mount.');
-  }
+function Button({color, type, onClick, children, margin, padding, width, maxWidth}) {	
 
-  shouldComponentUpdate() {    
-    console.log('Button Component should update.');
-    return true;
-	}
-	
-	render() {
-		return (
-			<Btn color={this.props.color} onClick={
-				// 클릭 시 로그인 여부를 받아오는 로직이 성공하면 스토어를 통해 로그인 state값을 변경처리한다. 
-				// store.dispatch({isLogin:true},)
-				this.props.onClick
-			}>
-				{this.props.children}
-			</Btn>
-		);
-	}
+	return (
+		<Btn 
+		color={color} 
+		onClick={onClick}
+		type={type}
+		margin={margin}
+		padding={padding}
+		width={width}
+		maxWidth={maxWidth}
+		>
+			{children}
+		</Btn>
+	);
 }
 
 // 디폴트 기본 값 설정방법
-// Button.defaultProps = {
-// 	role: 'primary',
-// };
+Button.defaultProps = {
+	color: 'none'
+};
 
-export default Button;
+export default React.memo(Button);

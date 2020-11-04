@@ -1,48 +1,46 @@
 import React from 'react';
 import styled from 'styled-components';
-import Input from '../atoms/IdPwInput';
 
-const Div = styled.div`
+const Container = styled.div`
 	display: flex;
-  width: 100%;
 	flex-flow: row nowrap;
 `;
 
 const Label = styled.span`
-	margin: 0.4em;
-	padding: 0.4em;
+	flex-grow: 1;
+	margin: 0.4em 0;
+	padding: 0.4em 0;
   width: 100%;
-	max-width: 6em;
-	font-size: 1.2em;
+	max-width: 5.5em;
+	font-size: 1.2rem;
 	font-weight: bold;
 	text-transform: capitalize;
+	word-break:keep-all;
 	
 	@media screen and (max-width: 414px) {        
-		font-size: 1em;
-		max-width: 4em;
+		font-size: 1rem;
 	}
 `;
 
-// const Input = styled.input`
-// 	margin: 0.4em;
-//   width: 100%;
-// 	height: 2.5em;
-// 	background-color: #eaf6ff;
-// 	border: none;
-// 	border-radius: 2px;
-// 	flex-grow: 3;
-	
-// 	border: 2px solid #efefef;
-//   border-radius: 5px;
-// 	height: 1.5em;
-// `;
+const Input = styled.input`
+	flex-grow: 4;	
+  width: 100%;
+	margin: 0.4em;
+	height: 2.5em;
+	background-color: #f6f6f6;
+	border: none;
+	border-radius: 2px;
+
+	@media screen and (max-width: 411px) {
+	}
+`;
 
 function IdPwInput(props) {
 	return (
-		<Div>			
-			<Label>{props.label}</Label>
-			<Input type={props.type} ></Input>
-		</Div>
+		<Container>
+		<Label>{props.label}</Label>
+		<Input id={props.label} type={props.type} value={props.value} onChange={props.onChange}/>
+		</Container>
 	);
 }
 

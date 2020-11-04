@@ -4,7 +4,8 @@ import styled from 'styled-components';
 const H1Title = styled.h1`
   font-size: 3em; 
   margin-left: 0.8em;
-	color: #111;
+  color: #646363;
+  text-shadow: 2px 2px 5px #ffc7c7;
 
   @media screen and (max-width: 768px) {
     margin-left: 0.8em;
@@ -15,6 +16,10 @@ const H1Title = styled.h1`
     margin-right: 0.6em;
     font-size: 2em;
   }
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const H2Title = styled.h2`
@@ -23,19 +28,40 @@ const H2Title = styled.h2`
   text-align: center;
 `;
 
+
+const H3Title = styled.h3`
+  text-align: center;
+  margin: .5em 0;
+	@media screen and (max-width: 414px) {
+	}
+`;
+
 function Title(props) {
-  if (props.type==='header') {
-    return (
-      <>
-        <H1Title>TodoList</H1Title>
-      </>
-	  );
-  } else {
-    return (
-      <>
-        <H2Title>{props.children}</H2Title>
-      </>
-    );
+  switch (props.type) {
+    case 'header':
+      return (
+        <>
+          <H1Title onClick={props.onClick}>TodoList</H1Title>
+        </>
+      );
+    case 'h2' :
+      return (
+        <>
+          <H2Title onClick={props.onClick}>{props.children}</H2Title>
+        </>
+      );
+    case 'h3' :
+      return (
+        <>
+          <H3Title onClick={props.onClick}>{props.children}</H3Title>
+        </>
+      );
+    default:
+      return (
+        <>
+          <H2Title onClick={props.onClick}>{props.children}</H2Title>
+        </>
+      );
   }
 }
 

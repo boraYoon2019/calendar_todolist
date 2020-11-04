@@ -1,10 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 import KaKaoLogin from 'react-kakao-login';
+import {kakao} from '../../envs';
 
 const KaKaoBtn = styled(KaKaoLogin)`
   padding: 0;
-  width: 300px;
+  width: 100%;
   height: 45px;
   line-height: 44px;
   color: #783c00;
@@ -27,17 +28,15 @@ const responseKaKao = (res) => {
 };
 
 function KakaoLogin (props){
-		return (
+  return (
       <>
         <KaKaoBtn
-                    jsKey={''}
-                    buttonText='카카오 계정으로 로그인'
-                    onSuccess={(res) => {
-                      // const { data } = this.state;
-                      console.log(res.response.access_token)}}
-                      onFailure={(res)=> console.log(res)}
-                    getProfile={true}
-                  />
+          jsKey={kakao}
+          buttonText='카카오 계정으로 로그인'
+          onSuccess={props.onSuccess}
+          onFailure={props.onFailure}
+          getProfile={true}
+        />
       </>
 		);
 }

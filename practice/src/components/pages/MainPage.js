@@ -1,56 +1,98 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
 import MainTemplate from '../templates/MainTemplate';
+import Header from '../organisms/Header';
+import BigCalendar from '../organisms/BigCalendar';
+import Charts from '../organisms/Charts';
 
-// 정의된 Template에 데이터를 넣어 뷰를 완성시키는 단계.
-// 클래스 시스템의 인스턴스, 객체의 구현체, 페이지 설계도로 그린 페이지 그 자체.
+// 리덕스
+import { connect } from 'react-redux'
+import * as actions from '../../modules/signInOrOut';
 
-class MainPage extends React.Component {
+'use strict';
+// 리덕스 스토어의 상태를 조회하거나, 액션을 디스패치 할 수 있는 컴포넌트.
+class MainPage extends PureComponent {
 
-  constructor(props) {
+  constructor() {
     super();
-    this.state = {
-			// 이 컴포넌트의 초기 state 값 설정
-      isLogin: false,
-      data:''
-		};
-		this.getCalendarData = this.getCalendarData.bind(this);
+    this.handleCalendarDataChange = this.handleCalendarDataChange.bind(this);
+    this.onSelectEvent = this.onSelectEvent.bind(this);
+    this.logout = this.logout.bind(this);
   }
 
-  getCalendarData(month) {
-    console.log(month);
-    fetch("http://15.165.223.171:8000/api/posts/?search=09")
-      .then(res => res.json())
-      .then(json => {
-        const data = json.map(function(obj){ 
-          let newData = {};
-          newData['title'] = obj.title;
-          newData['start'] = obj.start_at;
-          newData['end'] = obj.end_at !== null? obj.end_at: obj.start_at;
-          return newData;
-       });
-       console.log(data);
-      })
+  componentDidMount() {
+    console.log('MainPage Component did mount.');
+    console.log(localStorage.getItem('token'));
+    const date = new Date();
+    
+    if(localStorage.getItem('token')!==null) {
+      this.handleCalendarDataChange(date, 'login');
+    }
+  }
 
-    // 유저의 로그인 상태에 따라 데이터 받아오는 로직
-    // fetch('http://localhost:3000').then((res) => {
-    //   if (res.status === 200 || res.status === 201) { 
-    //     // 성공 HTTP 상태 코드면
+  handleCalendarDataChange(stringDate, when) {
+    this.props.requestCalendarData(stringDate, when);
+  }
 
-    //     res.text().then(text => console.log(text)); // 텍스트 출력
-    //   } else { 
-    //     // 실패 HTTP 상태 코드면
-    //     console.error(res.statusText);
-    //   }
-    // }).catch(err => console.error(err));
+  onSelectEvent(data) {
+    this.props.requestTodolists(data.start);
+    this.props.history.push('/writing');
   }
   
-  componentDidMount() {
-    this.getCalendarData(5);
+  logout() {
+    localStorage.removeItem('token');
+    this.props.setSignIn(false);
+    alert('로그아웃 되었습니다 :)');
+    this.componentShouldUpdate();
   }
-
+  
   render() {
-    return <MainTemplate></MainTemplate>;
+
+    return (
+      <MainTemplate 
+        headerSection={
+          <Header 
+            modal={this.props.modal}
+            isSignIn={this.props.isSignIn}
+            onWritingButtonClick={this.props.goToWriting}
+            onSignButtonClick={
+              this.props.isSignIn && localStorage.getItem('token')!== null? 
+              this.logout : this.props.showModal
+            }
+            page='main'
+          />
+        }>
+        <BigCalendar
+          onSelectEvent={(data)=> { this.onSelectEvent(data) }}
+          onRangeChange={ 
+            (data) => {
+              // console.log(data);
+              this.handleCalendarDataChange(data.start, 'onRangeChange');
+            }
+          }
+          events={
+            this.props.isSignIn? this.props.calendarData.data : []
+          }
+          isSignIn={this.props.isSignIn}
+        />
+        {this.props.isSignIn && (<Charts onRangeChange={(data)=>{}}/>)}
+      </MainTemplate>
+      );
   }
 }
 
-export default MainPage;
+const mapStateToProps = (state) => ({
+  isSignIn: state.signInOrOut.isSignIn,
+  modal: state.signInOrOut.modal,
+  calendarData: state.signInOrOut.calendarData,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  setSignIn: (boolean) => dispatch(actions.setSignIn(boolean)),
+  showModal: () => dispatch(actions.showModal()),
+  closeModal: () => dispatch(actions.closeModal()),
+  goToWriting: () => dispatch(actions.goToWriting()),
+  requestCalendarData: (date, when) => dispatch(actions.requestCalendarData(date, when)),
+  requestTodolists: (date) => dispatch(actions.requestTodolists(date))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(MainPage);

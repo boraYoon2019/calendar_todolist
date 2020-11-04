@@ -7,25 +7,28 @@ const Button = styled.button`
   outline: none;
   border: none;
   font-size: 1.5rem;
-  padding: .4em .8em;
-  margin: ${props => props.inItem? '0' : '.7em 1em'};  
+  padding: ${props => props.inItem? '0 .4em' : '.4em .6em'};
+  margin: ${props => props.inItem? '0' : '-.8em -.8em 0 0'}; 
+
   margin-left: auto;
-  transform: scale(1.3);
+  transform: scale(1.2);
 
   &:hover{
     cursor: pointer;
-    color:  ${props => props.inItem ==='true'? '#f30d0d' : '#111'};
-    transform: ${props => props.inItem? 'none' : 'scale(1.6)'}; 
+    color: ${props => props.inItem? '#f30d0d' : '#111'};
+    transform: ${props => props.inItem? 'scale(1.2)' : 'scale(1.5)'}; 
     transition: ${props => props.inItem? 'none' : 'transform 200ms ease'}; 
   }
 `;
 
-function Xbutton(props) {
+function Xbutton({inItem, onClick, value}) {
 	return (
-			<Button>&times;</Button>
+      <Button 
+      inItem={inItem}
+      onClick={onClick}      
+      value={value}
+      >&times;</Button>
 	);
 };
 
 export default React.memo(Xbutton);
-
-// import XButton from '../atoms/XButton';

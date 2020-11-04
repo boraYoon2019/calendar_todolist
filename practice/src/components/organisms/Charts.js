@@ -3,7 +3,6 @@ import React, { PureComponent } from 'react';
 import {
 	BarChart,
 	Bar,
-	Cell,
 	XAxis,
 	YAxis,
 	CartesianGrid,
@@ -15,34 +14,35 @@ import {
 const data = [
 	{
 		name: '월 평균 달성률',
-		'7월': 90,
-		'8월': 55,
-		'9월': 60,
+		'9월': 90,
+		'10월': 55,
+		'11월': 60,
 	},
 ];
 
-const renderCustomizedLabel = (props) => {
-	const { x, y, width, height, value } = props;
-	const radius = 25;
 
-	return (
-		<g>
-			<circle cx={x + width / 2} cy={y - radius} r={radius} fill='#eaf6ff' />
-			<text
-				x={x + width / 2}
-				y={y - radius}
-				fill='#424242'
-				textAnchor='middle'
-				dominantBaseline='middle'
-			>
-      {data[0]['9월']+'%'}
-			</text>
-		</g>
-	);
-};
+function Charts(props) {
 
-class Example extends PureComponent {
-	render() {
+	const renderCustomizedLabel = (props) => {
+		const { x, y, width, height, value } = props;
+		const radius = 25;
+	
+		return (
+			<g>
+				<circle cx={x + width / 2} cy={y - radius} r={radius} fill='#ffc7c7' />
+				<text
+					x={x + width / 2}
+					y={y - radius}
+					fill='#424242'
+					textAnchor='middle'
+					dominantBaseline='middle'
+				>
+				{data[0]['11월']+'%'}
+				</text>
+			</g>
+		);
+	};
+
 		return (
 			<BarChart
 				width={320}
@@ -52,7 +52,7 @@ class Example extends PureComponent {
 					top: 50,
 					right: 20,
 					left: 10,
-					bottom: 20,
+					bottom: 20
 				}}
 			>
 				<CartesianGrid strokeDasharray='3 3' />
@@ -60,14 +60,13 @@ class Example extends PureComponent {
 				<YAxis />
 				<Tooltip />
 				<Legend />
-				<Bar dataKey='7월' fill='#a4a4a4' minPointSize={5}></Bar>
-				<Bar dataKey='8월' fill='#a4a4a4' minPointSize={5}></Bar>
-				<Bar dataKey='9월' fill='#bbdefb' minPointSize={10}>
-					<LabelList dataKey='name' content={renderCustomizedLabel} />
+				<Bar dataKey='9월' fill='#ffc7c7' minPointSize={5}></Bar>
+				<Bar dataKey='10월' fill='#f08474' minPointSize={5}></Bar>
+				<Bar dataKey='11월' fill='#f05454' minPointSize={10}>
+					<LabelList content={renderCustomizedLabel} />
 				</Bar>
 			</BarChart>
 		);
-	}
 }
 
-export default Example;
+export default React.memo(Charts);
