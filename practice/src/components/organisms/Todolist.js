@@ -4,7 +4,7 @@ import ListLayout from '../atoms/ListLayout';
 import ListItem from '../molecules/ListItem';
 import Title from '../atoms/Title';
 import TabList from '../molecules/TabList';
-import Xbutton from '../atoms/XButton';
+import Xbutton from '../atoms/Xbutton';
 import DetailPlan from '../molecules/DetailPlan';
 import FlexContainer from '../atoms/FlexContainer';
 

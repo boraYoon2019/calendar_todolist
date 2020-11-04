@@ -1,6 +1,6 @@
 import React, { useState }  from 'react';
 import styled from 'styled-components';
-import XButton from '../atoms/XButton';
+import XButton from '../atoms/Xbutton';
 import Checkbox from '../atoms/Checkbox';
 
 const Item = styled.li`
