@@ -7,6 +7,7 @@ const appBuild = path.resolve(__dirname, 'build');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const appHtml = path.resolve(__dirname, 'public', 'index.html');
 const appPublic = path.resolve(__dirname, 'public');
+const webpack = require('webpack');
 
 const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== 'false';
 
@@ -73,13 +74,17 @@ module.exports = (webpackEnv) => {
     resolve: {
         modules: [ 
 					path.join(__dirname, "src"),
-					'node_modules'],
+					'node_modules'
+				],
         extensions: ['.js', '.json', '.jsx', '.css'],
     },
 
 		// public/index.html을 build/ 로 옮겨주면서 번들 결과물을 script태크로 포함시키는 플러그인
 		// template 옵션을 사용하지 않으면 webpack이 자체적으로 html을 만든다.
-		plugins: [new HtmlWebpackPlugin({ template: appHtml })],
+		plugins: [
+			new HtmlWebpackPlugin({ template: appHtml }),
+			new webpack.HotModuleReplacementPlugin()
+		],
 
 		// localhost:3000에서, 즉 RAM에 개발 서버를 올려서 구동할 수 있도록 하는 devServer 세팅
 		devServer: {
@@ -93,6 +98,7 @@ module.exports = (webpackEnv) => {
 			historyApiFallback: true,
 			// 컴파일러 오류 또는 경고가있을 때 브라우저에 전체 화면 오버레이를 표시
 			overlay: true,
+			hot: true,
 		},
 		devtool: isEnvProduction
 			? shouldUseSourceMap

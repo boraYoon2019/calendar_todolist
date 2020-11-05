@@ -5,7 +5,7 @@ import SocialLogin from '../molecules/SocialLogin';
 import ModalLayout from '../atoms/ModalLayout';
 import Form from '../atoms/Form';
 import Title from '../atoms/Title';
-import Xbutton from '../atoms/XButton';
+import Xbutton from '../atoms/Xbutton';
 
 class SignInModal extends React.Component {
 

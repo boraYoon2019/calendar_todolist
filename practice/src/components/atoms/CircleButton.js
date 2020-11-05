@@ -17,7 +17,8 @@ const Btn = styled.button`
 
   &:hover {
 		cursor: pointer;
-    background: #f05454;
+		transform: scale(1.15);
+		transition: transform 300ms;
   }
 `;
 

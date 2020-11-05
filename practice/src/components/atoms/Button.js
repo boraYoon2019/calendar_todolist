@@ -12,15 +12,14 @@ const Btn = styled.button`
 	text-transform: uppercase;
 	margin: ${props => props.margin!==undefined? props.margin : '0.4em 0.6em'};
 	padding: ${props => props.padding!==undefined? props.padding : '0.6em 1em'};
-	border: ${props => props.color!==undefined && props.color==='primary' ? '3px solid #ffe2e2' : '3px solid #fff'};
+	border: ${props => props.color!==undefined && props.color==='primary' ? '4px solid #ffe2e2' : '4px solid #fff'};
 	border-radius: ${props =>
 	props.borderRadius !== undefined ? props.borderRadius : '10px'};
 
   &:hover {
 		cursor: pointer;
-		background: ${props => props.color!==undefined && props.color === 'primary' ? '#ffc7c7' : '#fff'};
-		/* #ffc7c7 */
-		box-shadow: 0px 0px 4px 2px #ffe2e2;
+		transition: 400ms ease;
+		box-shadow: 0px 0px 10px 2px #ffe2e2;
   }
 
 	@media screen and (max-width: 414px) {

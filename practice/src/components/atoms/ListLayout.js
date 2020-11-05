@@ -12,7 +12,8 @@ const Layout = styled.div`
   border: 3px solid #fff;
   border-radius: 15px;
   background-color: ${props => props.state==='selected'? '#ffc7c7' : '#ffc3c3'};
-  box-shadow: 7px 7px 8px 4px #ccc;
+  box-shadow: 8px 12px 14px 2px #ccc;
+  
 
   @media screen and (max-width: 411px) {
     padding: .5em;
