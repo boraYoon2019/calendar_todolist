@@ -17,7 +17,19 @@ const GlobalStyle =createGlobalStyle`
 	}
 	body {
 		background-color: #f9f9f9;
-  }
+	}
+
+	.container:hover input ~ .checkmark {
+		background-color: #ccc;
+	}
+
+	.container input:checked ~ .checkmark {
+		background-color: #ff8888;
+	}
+
+	.container input:checked ~ .checkmark:after {
+		display: block;
+	}	
 `;
 
 //  exact 를 하지 않으면, /이 포함된 다른 페이지도 함께 보여짐.

@@ -33,6 +33,7 @@ const NormalSection = styled.section`
 const SectionFeedback = styled.section`
   display: flex;
   flex-flow: column nowrap;
+  align-items: center;
   width: 100%;
   padding: 3em;
   

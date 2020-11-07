@@ -74,12 +74,10 @@ const DELETE_TODOLISTIEM = 'DELETE_TODOLISTIEM';
 const DELETE_TODOLISTIEM_SUCCESS = 'DELETE_TODOLISTIEM_SUCCESS';
 const DELETE_TODOLISTIEM_ERROR = 'DELETE_TODOLISTIEM_ERROR';
 
-// todolist 아이템 완료여부 체크하기
+// todolist 아이템 완료여부 체크하거나, 세부 계획 내용 변경
 const UPDATE_TODOLISTIEM = 'UPDATE_TODOLISTIEM';
 const UPDATE_TODOLISTIEM_SUCCESS = 'UPDATE_TODOLISTIEM_SUCCESS';
 const UPDATE_TODOLISTIEM_ERROR = 'UPDATE_TODOLISTIEM_ERROR';
-
-
 
 // 액션 생성 함수 (액션 타입 정의)- 컴포넌트에서 직접 디스패치되는 함수 모음
 // 모달
@@ -107,8 +105,7 @@ export const deleteTodolist = (todolistId) => ({ type: DELETE_TODOLIST, id: todo
 
 export const addTodolistItems = (todolistId) => ({ type: ADD_TODOLISTIEMS, todolistId: todolistId });
 export const deleteTodolistItem = (todolistId, itemId) => ({ type: DELETE_TODOLISTIEM, todolistId:todolistId, itemId:itemId });
-export const updateTodolistItem = (item) => ({ type: UPDATE_TODOLISTIEM, item: item });
-
+export const updateTodolistItem = (todolistId, itemId, content) => ({ type: UPDATE_TODOLISTIEM, todolistId:todolistId, itemId:itemId, content: content });
 
 // 로그인/회원가입 사가
 const joinSaga = joinIn(JOININ, userAPI.joinIn);
@@ -152,6 +149,7 @@ export function* saga() {
   yield takeLatest(ADD_TODOLIST, addTodolistSaga);
   yield takeLatest(DELETE_TODOLIST, deleteTodolistsSaga);
   yield takeLatest(DELETE_TODOLISTIEM, deleteTodoItemSaga);
+  yield takeLatest(UPDATE_TODOLISTIEM, updateTodoItemSaga);
 }
 
 /* 초기 상태 선언 */

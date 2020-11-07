@@ -46,6 +46,7 @@ class WritingTodolist extends PureComponent {
       "comments": this.state.list
     }
     this.props.makeList(todolist);
+    
     this.setState({
       title: '',
       listItem: '',
@@ -66,8 +67,10 @@ class WritingTodolist extends PureComponent {
       const list = this.state.list;      
       this.setState({ list: this.state.list.concat(
         {
+          
+          "id": list.length>0? list[list.length-1].id+1 : 0,
           "detail_title": event.target.value,
-          "detail_context": "dd",
+          "detail_context": "",
           "is_completed": false
         }
       )});
@@ -90,6 +93,7 @@ class WritingTodolist extends PureComponent {
         {
           "id": list.length>0? list[list.length-1].id+1 : 0,
           "detail_title": this.state.listItem,
+          "detail_context": "",
           "is_completed": false
         }
       )});
@@ -99,7 +103,10 @@ class WritingTodolist extends PureComponent {
   }
   
   deletelistItem(event) {
+    event.preventDefault();
     const id=event.target.value;
+    console.log(id);
+
     this.setState( 
       { list: this.state.list.filter(item=>{ return item.id!=id; }) } 
     );
@@ -108,19 +115,21 @@ class WritingTodolist extends PureComponent {
   
 	render() {
 
-    const { 
+    const {
       makeList, 
       handleTitleChange, 
       handleItemChange, 
       addTodolistItem, 
-      addTodolistItemByEnter, 
+      addTodolistItemByEnter,
       deletelistItem,
       noKeyPress
     } = this;
+
     const { list, listItem, title} = this.state;
     const listItems = list.map((item, index) => 
       <ListItem 
-        key={index} 
+        key={index}
+        id={index}
         onXClick={deletelistItem}
       >
       {item.detail_title}

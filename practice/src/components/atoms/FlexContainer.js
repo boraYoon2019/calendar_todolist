@@ -6,7 +6,7 @@ const Container = styled.div`
   width: 100%;
   flex-flow: ${props => props.flexFlow!==undefined? props.flexFlow : 'row nowrap'};
   align-items: ${props => props.alignItems!==undefined? props.alignItems : 'center'};
-	padding: ${props => props.padding!==undefined? props.padding : '0 0 .7em .8em'};
+	padding: ${props => props.padding!==undefined? props.padding : '0 0 .2em .2em'};
   justify-content: ${props => props.justifyContent!==undefined? props.justifyContent : 'center'};  
   transition: ${props => props.transition!==undefined? props.transition : ''};
   margin-bottom: ${props => props.marginBottom!==undefined? props.marginBottom : ''};

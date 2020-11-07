@@ -45,7 +45,7 @@ function Charts(props) {
 
 		return (
 			<BarChart
-				width={320}
+				width={300}
 				height={400}
 				data={data}
 				margin={{

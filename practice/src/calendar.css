@@ -20,6 +20,8 @@ button.rbc-input::-moz-focus-inner {
 .rbc-calendar {
   box-sizing: border-box;
   height: 100%;
+  width: 80vw;
+  max-width: 1550px;
   display: flex;
   flex-direction: column;
   align-items: stretch; }
@@ -89,13 +91,15 @@ button.rbc-input::-moz-focus-inner {
   justify-content: center;
   align-items: center;
   margin-bottom: 10px;
-  font-size: 16px; }
+  font-size: 1.5rem; }
   .rbc-toolbar .rbc-toolbar-label {
     font-weight: bold;
     flex-grow: 1;
-    padding: 0 10px;
+    padding: 10px 0 20px 0;
     text-align: center; }
+
   .rbc-toolbar button {
+    font-size: 1.2rem;
     font-weight: bold;
     color: #373a3c;
     display: inline-block;
@@ -160,8 +164,10 @@ button.rbc-input::-moz-focus-inner {
   border: none;
   box-sizing: border-box;
   box-shadow: none;
-  margin: 0;
-  padding: 2px 5px;
+  font-weight: bolder;
+  font-size: 1.2rem;
+  margin: 1px 0;
+  padding: 5px 5px;
   background-color: #ffb5b5;
   border-radius: 5px;
   color: #fff;
@@ -362,7 +368,7 @@ button.rbc-input::-moz-focus-inner {
       left: 10px;
       right: 0; }
   .rbc-day-slot .rbc-event {
-    border: 1px solid #265985;
+    border: 1px solid #ffb5b5;
     display: flex;
     max-height: 100%;
     min-height: 20px;
@@ -517,3 +523,39 @@ button.rbc-input::-moz-focus-inner {
   height: 1px;
   background-color: #74ad31;
   pointer-events: none; }
+
+  
+@media screen and (max-width: 1885px) {
+  .rbc-calendar {
+    max-width: 100vw;
+  }
+}
+    
+@media screen and (max-width: 540px) {
+  .rbc-calendar {
+    height: 70%;
+    max-width: 98vw;
+  }
+
+  .rbc-toolbar .rbc-toolbar-label {
+    font-size: 1.3rem;
+    padding: 20px 20px 10px 20px;
+  }
+
+}
+@media screen and (max-width: 320px) {
+  .rbc-toolbar .rbc-toolbar-label {
+    font-size: 1rem;
+    padding: 20px 10px 10px 10px;
+  }
+
+  .rbc-event {
+    font-size: 1rem;
+    margin: 0;
+    padding: 2px 5px;
+  }
+
+  .rbc-toolbar button {
+    font-size: 1rem;
+  }
+}

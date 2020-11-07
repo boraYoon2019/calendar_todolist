@@ -21,7 +21,7 @@ module.exports = (webpackEnv) => {
 		output: {
 			path: appBuild,
 			filename: isEnvProduction
-				? 'static/js/[name].[contenthash:8].js'
+				? 'static/js/[name].[hash:8].js'
 				: isEnvDevelopment && 'static/js/bundle.js',
 		},
 		module: {

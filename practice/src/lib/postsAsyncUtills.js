@@ -89,7 +89,7 @@ console.log('deleteTodoItem_byId');
       
       console.log('deleteTodoItem_byId payload');
       const payload = yield call(promiseCreator, action.todolistId, action.itemId);
-      console.log(payload);
+      console.table(payload);
       yield put({ type: SUCCESS, todolistId: action.todolistId, itemId: action.itemId}); 
 
     } catch (error) {
@@ -107,16 +107,15 @@ export const updateTodoItem_withItem = (type, promiseCreator) => {
   const [SUCCESS, ERROR] = [`${type}_SUCCESS`, `${type}_ERROR`];
 
   return function* addListSaga(action) {
-    
+    console.log(action.content);
     try {
-      const payload = yield call(promiseCreator, action.list); 
-      console.log(payload);
-      yield put({ type: SUCCESS, list: payload}); 
+      const payload = yield call(promiseCreator, action.todolistId, action.itemId, action.content);
+      yield put({ type: SUCCESS, todolistId: action.todolistId, itemId: action.itemId, content: payload});
 
     } catch (error) {
 
       console.log(error);
-      yield put({ type: ERROR, error: error, list: error});
+      yield put({ type: ERROR, error: error});
     }
   };
 };
@@ -190,10 +189,11 @@ export const handle_addList_actions = (type) => {
   return (state, action) => {
 
     switch (action.type) {
-      case SUCCESS:
-        // 리스트 추가 후, 교체해주기
-        console.log('리스트 추가 후, 교체해주기',state.todolists.data.concat(action.list));
-
+      case SUCCESS:        
+        const body = document.querySelector('body');
+        const scrollPos = body.scrollHeight-400;
+        window.setTimeout(()=>{window.scrollTo({ top: scrollPos, behavior: 'smooth' });}, 200);
+        
         return {
           ...state,
           todolists: postReducerUtils.success(state.todolists.data.concat(action.list))
@@ -250,7 +250,7 @@ export const handle_deleteItem_actions = (type) => {
         // 먼저 slice 
         // 해당 리스트 id로 인덱스 찾아서, 안에 코멘트 배열 선택 후, 배열의 id로 인덱스 찾아서,
         // 해당 아이템만 제거해 주기
-        // 해당 newData로 변경
+        // 해당 newData로 변경        
         const listIndex = state.todolists.data.findIndex(listObject => listObject.id == action.todolistId);
         console.log('listIndex',listIndex);
         const newData = state.todolists.data.slice();
@@ -282,10 +282,18 @@ export const handle_updateItem_actions = (type) => {
 
     switch (action.type) {
       case SUCCESS:
-        // 리스트 변경해주기
+        const newData = state.todolists.data.slice();
+        console.log('newData', newData);
+        const listIndex = newData.findIndex(listObject => listObject.id == action.todolistId);
+        console.log('listIndex',listIndex);
+        const itemIndex = newData[listIndex].comments.findIndex(listObject => listObject.id == action.itemId);
+        console.log('itemIndex',itemIndex);
+        newData[listIndex].comments[itemIndex] = action.content;
+        console.log(newData);
+        
         return {
           ...state,
-          todolists: postReducerUtils.success(state.todolists.data.concat(action.list))
+          todolists: postReducerUtils.success(newData)
         };
       case ERROR:
         return {

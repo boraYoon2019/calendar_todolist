@@ -16,6 +16,10 @@ const Span = styled.span`
 const Img = styled.img`
   width: 20%;
   max-width: 5em;
+
+  @media screen and (max-width: 320px) {
+    display:none;
+  }
 `;
 
 

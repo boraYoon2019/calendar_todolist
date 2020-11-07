@@ -1,103 +1,125 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef} from 'react';
 import UlList from '../atoms/UlList';
 import ListLayout from '../atoms/ListLayout';
 import ListItem from '../molecules/ListItem';
 import Title from '../atoms/Title';
 import TabList from '../molecules/TabList';
 import Xbutton from '../atoms/Xbutton';
-import DetailPlan from '../molecules/DetailPlan';
+import EditText from './EditText';
 import FlexContainer from '../atoms/FlexContainer';
 
 
-function Todolist ({ todolists, toggleCheck, showDetailPlan, deleteList, deleteItem }) {
+function Todolist ({ todolist, changeChecked, editDetailPlan, deleteList, deleteItem, index }) {
+  const isInitialMount = useRef(true);
+  
+  const [clickedItemInfo, setclickedItemInfo] = useState({
+      id: "",
+      title: "",
+      contents: "",
+      display: 'none'
+    });
 
   useEffect(() => {
-    // 렌더링이 얼마나 되는지 확인용
-    console.log("Todolist rendering!!!!");
-
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+      console.table(clickedItemInfo);
+    } else {
+      //  console.log("** Todolist rendering!!!!");
+    }
   });
+
+  const listData = todolist !== undefined ? todolist : [];
 
   // Todolist 관련
   const deleteOneList = (event) => {
     deleteList(event.target.value);
   }
 
-  // // Todolist 내 각 item 관련
-  // const deleteListItem = (event, posts) => {
-  //   // deleteItem();
-  //   console.log('deletelistItem:', event.target.value, posts);
-  // }
-
-  const onCheckHandler = (event) => {
-    // toggleCheck();
-    console.log('checked: ', event.target.checked);
+  const onCheckHandler = (event, postId, itemId) => {
+    changeChecked(event.target.checked, postId, itemId);
   }
   
-  const onItemClick = (event) => {
-    const node = event.target.nodeName;
-    if(node==="BUTTON"||node==="INPUT") {
-      return;
-    }
-    console.log('디테일 플랜 열리기');
-    // showDetailPlan();
+  const onFinishEdit = (editted_DetailPlan) => {
+    editDetailPlan(editted_DetailPlan, listData.id, clickedItemInfo.id);
   }
 
-  const listsData = todolists !== undefined ? todolists.data : [];
-  console.log(listsData);
+  const onItemClick = (event, itemId, itemIndex) => {
+    const node = event.target.nodeName;
+
+    if (node==="P"){
+      let clickedAgain = false;
+
+      if(clickedItemInfo.id !== ""){
+        clickedAgain = true;
+      }
+
+      if (clickedAgain) {
+        if(clickedItemInfo.id === itemId) {
+          setclickedItemInfo({
+            id: "",
+            title: "",
+            contents: "",
+            display: 'none'
+          });
+          return;
+        }
+      }
+
+      setclickedItemInfo({
+        id: itemId,
+        title: todolist.comments[itemIndex].detail_title,
+        contents: todolist.comments[itemIndex].detail_context,
+        display: 'inline-block'
+      });
+      console.log('onItemclicked After setClickITem',clickedItemInfo.contents);
+      console.table(clickedItemInfo);
+    }
+  }
   
   const items = 
-  listsData.map((item)=>(
-    item.comments.map((oneItem)=>(
+  listData.comments.map((oneItem, index)=>(
     <ListItem 
       checkbox
-      key={oneItem.id.toString()}  
+      key={oneItem.id.toString()}
+      id={oneItem.id}
+      index={index}
       checked={oneItem.is_completed}
-      onChangeChecked={onCheckHandler}
-      id={oneItem.id.toString()}
-      onXClick={()=>deleteItem(oneItem.post.toString(), oneItem.id.toString())}
-      onItemClick={onItemClick}
+      onChangeChecked={(event)=>onCheckHandler(event, oneItem.post, oneItem.id)}
+      onXClick={()=>deleteItem(oneItem.post, oneItem.id)}
+      active={clickedItemInfo.id === oneItem.id? true:false}
+      onItemClick={(event)=>{
+        onItemClick(event, oneItem.id, index)}}
     >
       {oneItem.detail_title}
     </ListItem>
-    ))
-  ));
+    ));
   
-  const lists = listsData.map((list, index)=>(
-    <FlexContainer 
-      alignItems='flex-start'
-      marginBottom='3em'
-      transition='400ms ease'
-      flexFlow='row wrap'
-      key={list.id}
-    >
+		return (
+      <FlexContainer 
+        alignItems='flex-start'
+        marginBottom='3em'
+        transition='400ms ease'
+        flexFlow='row wrap'
+        key={listData.id}
+      >
       <ListLayout>
-        <Xbutton value={list.id} onClick={deleteOneList}/>
-        <Title>{list.title}</Title>
+        <Xbutton value={listData.id} onClick={deleteOneList}/>
+        <Title>{listData.title}</Title>
         <UlList>
-          {items[index]}
+          {items}
         </UlList>
-        <TabList active='all'/>
       </ListLayout>
-      {list.comments[0] !== undefined && (
-        <DetailPlan
-        display={'inline-block'}
-        status={list.comments[0] !== undefined? 'clicked' : ''}
-        title={list.comments[0].detail_title}
-        value={list.comments[0].detail_context}
+      {clickedItemInfo.display !== 'none' && (
+        <EditText
+          display={clickedItemInfo.display !== undefined? clickedItemInfo.display : ""}
+          title={clickedItemInfo.title}
+          value={clickedItemInfo.contents!== undefined? clickedItemInfo.contents : ""}
+          type={'datail plan'}
+          onFinishEdit={onFinishEdit}
         />
       )}{''}
     </FlexContainer>
-  ));
-
-		return (
-      <>
-      {lists}
-      </>
 		);
 }
 
 export default Todolist;
-
-// <DetailPlan display='flex' title='옷구매' content='예우'/>
-// {list.comments[0] !== undefined && (
-// )}{''}

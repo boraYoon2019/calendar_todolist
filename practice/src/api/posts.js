@@ -163,43 +163,41 @@ export const deleteTodoItem = async (todolistId, itemId) => {
 
 };
 
-export const updateTodoItem = async item => {
+export const updateTodoItem = async (todolistId, itemId, content) => {
   const token = localStorage.getItem('token');
-
-    const response = await fetch(`http://15.165.223.171:8000/api/posts/${todolistId}`,
+  console.log('updateTodoItem, id, content', todolistId,itemId,content);
+    const response = await fetch(`http://15.165.223.171:8000/api/posts/${todolistId}/list/${itemId}/`,
     {
-      method: 'PUT',
+      method: 'PATCH',
       headers: {
       'Content-Type': 'application/json',
-      'Accept' : 'application/json',
-      'Authorization' : `Bearer ${token}`
+      'Accept': 'application/json',
+      'Authorization': `Bearer ${token}`
       },
-      body: JSON.stringify(todolist_jsonObject)
+      body: JSON.stringify(content)
     });
 
     const rawData = await response.json();
-    console.log('addTodolist', rawData);
+    console.table(rawData);
     if(!response.ok) {
       switch (response.status) {
         case 400:
           throw new Error('non_field_errors');
 
         default:
-          // throw new Error(Object.getOwnPropertyNames(rawData)[0]);
-          throw new Error(rawData[0],rawData[1]);
+          // throw new Error(rawData[0],rawData[1]);
+          // console.log(response);
+          throw new Error(rawData);
       }  
     }
-
-    const refinedData = await rawData.map(function(obj){ 
-      let newData = {};
-      newData['id'] = obj.id;
-      newData['title'] = obj.title;        
-      newData['feedback'] = obj.feedback;      
-      newData['comments'] = [];
+    
+    const refinedData = {};
+    refinedData['id'] = rawData.id;
+    refinedData['post'] = rawData.post;        
+    refinedData['detail_title'] = rawData.detail_title;
+    refinedData['detail_context'] = rawData.detail_context;
+    refinedData['is_completed'] = rawData.is_completed;
       
-      return newData;
-    });
-
     return refinedData;
 
 };

@@ -4,6 +4,7 @@ import WritingTodolist from '../organisms/WritingTodolist';
 import Todolist from '../organisms/Todolist';
 import Header from '../organisms/Header';
 import DatePicker from '../organisms/DatePicker';
+import EditText from '../organisms/EditText';
 // 리덕스
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -46,11 +47,11 @@ function WritingPage(props) {
       dispatch(requestTodolists(new Date));
 
     } else {
-      console.log("writing page, useEffect : else");
+      // console.log("writing page, useEffect : else");
     }
 
     // 렌더링이 얼마나 되는지 확인용
-    console.log("WritingPage rendering!!!!");
+    // console.log("WritingPage rendering!!!!");
   });
 
   const onDateChange = (date) => {
@@ -64,12 +65,18 @@ function WritingPage(props) {
     props.history.push('/');
   }
 
-  const toggleCheck = () => {
+  const changeChecked = (checked, postId, itemId) => {
+    const content = { is_completed: checked };
+    dispatch(updateTodolistItem(postId, itemId, content));
   }
 
-  const showDetailPlan = () => {
-    
+  const editDetailPlan = (editted_DetailPlan, postId, itemId) => {
+    const content = { detail_context: editted_DetailPlan };
+    console.log('editDetailPlan',postId,itemId,content);
+    dispatch(updateTodolistItem(postId, itemId, content));
   }
+
+
   const deleteList = (id) => {
     dispatch(deleteTodolist(id)); 
   }
@@ -91,6 +98,20 @@ function WritingPage(props) {
     dispatch(goToHome());
   }
 
+  const data = signInOrOut.todolists.data;
+  const listsData = data !== undefined ? data : [];
+
+  const todolists = listsData.map((list, index)=>(
+    <Todolist
+      todolist={list}
+      key={list.id.toString()}
+      index={index}
+      changeChecked={changeChecked}
+      deleteList={deleteList}
+      deleteItem={deleteItem}
+      editDetailPlan={editDetailPlan}
+    />
+  ));
 
   return (
     <WritingTemplate
@@ -117,20 +138,20 @@ function WritingPage(props) {
         </>
       }
 
-      mainSection={(
-        <Todolist
-          todolists={signInOrOut.todolists}
-          toggleCheck={toggleCheck}
-          showDetailPlan={showDetailPlan}
-          deleteList={deleteList}
-          deleteItem={deleteItem}
-        />
-      )}
-
-      feedbackSection={''}
+      mainSection={
+        todolists
+      }
 
     />
   );
 }
 
 export default WritingPage;
+// feedbackSection={(
+//   <EditText
+//   display={'inline-block'}
+//   status={'clicked'}
+//   type={'feedback'}
+//   value={listsData.feedback}
+//   />
+// )}

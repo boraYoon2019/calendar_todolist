@@ -11,21 +11,31 @@ const Item = styled.li`
   align-items: center;
   padding: .6em;
   /* margin: -1px .7em; */
-  border: 2px solid #ccc;
-  background-color: #fff2f2;
+  border: 2px solid #e6e6e6;
+  background-color: ${props=>props.active===true? '#88d7d0' : '#dbdbdb' };
   border-radius: 6px;
   box-shadow: 0px 0px 4px 2px #ccc;
-    
+  font-size: 1.1rem;
+
 	@media screen and (max-width: 414px) {
-  padding: .3em;
-	}
+    padding: .3em;
+    font-size: 1rem;
+  }
+
 `;
 
-const Text = styled.span`
+const Text = styled.p`
+  width: 100%;
+  line-height:1.1rem;
   text-decoration: ${props=>props.checked? 
   'line-through' : 'none' };
   color: ${props=>props.checked? 
-  '#8e8e8e' : '#111' };
+  '#729293' : '#111' };
+  padding: .5em .5em;
+
+  &:hover {
+    cursor:pointer;    
+  }
 `;
 
 const InputText = styled.label`
@@ -42,18 +52,23 @@ const InputText = styled.label`
 function ListItem(props){
   	
 	const [checked, setChecked] = useState(props.checked);
+	// const [active, setActive] = useState(false);
 
 	const onChange = (event) => {
-		setChecked(event.target.checked);
-		props.onChangeChecked(event);
-	}
-	
+    setChecked(event.target.checked);
+    props.onChangeChecked(event);
+  }
   
+  const onItemTextClick = (event) => {
+    props.onItemClick(event);
+    // setActive(!active);
+  }
+
   if (props.checkbox) {
     return (
-      <Item onClick={props.onItemClick}>
+      <Item active={props.active}>
         <Checkbox type='checkbox' checked={checked} value={props.value} onChange={onChange}/>
-        <Text checked={checked}>{props.children}</Text>
+        <Text onClick={onItemTextClick} checked={checked}>{props.children}</Text>
         <XButton inItem value={props.id} onClick={props.onXClick}/>
       </Item>
     );
@@ -67,4 +82,4 @@ function ListItem(props){
   }
 }
 
-export default React.memo(ListItem);
+export default ListItem;

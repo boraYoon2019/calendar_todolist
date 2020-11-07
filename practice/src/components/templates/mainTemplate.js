@@ -24,4 +24,5 @@ function MainTemplate(props) {
 		</MainTemp>
 	);
 }
+
 export default MainTemplate;

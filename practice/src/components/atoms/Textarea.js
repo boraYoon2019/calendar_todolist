@@ -17,20 +17,20 @@ const CustomedTextArea = styled.textarea`
   }
 
   &:read-only {
- background-color: rgb(195, 195, 195);
- border: 2px solid rgb(236, 236, 236);
- border-radius: 8px;
- cursor: pointer;
-}
+    background-color: rgb(236, 236, 236);
+    border: 2px solid rgb(236, 236, 236);
+    border-radius: 8px;
+    cursor: pointer;
+  }
 `;
 
-function TextArea({value,onChange,onClick,readOnly}){
+function TextArea({value,onChange,onClick,readOnly,placeholder}){
 	return (
     <CustomedTextArea
-      placeholder='상세 계획을 적어주세요. :)'
+      placeholder={placeholder}
       value={value}
       onChange={onChange}
-      onClick={onChange}
+      onClick={onClick}
       readOnly={readOnly}
     />
 	);

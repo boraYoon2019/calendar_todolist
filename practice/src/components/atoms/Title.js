@@ -9,12 +9,16 @@ const H1Title = styled.h1`
 
   @media screen and (max-width: 768px) {
     margin-left: 0.8em;
-    font-size: 2em;
+    font-size: 2.5em;
   }
   @media screen and (max-width: 411px) {
     margin-left: 0.6em;    
     margin-right: 0.6em;
     font-size: 2em;
+  }
+
+  @media screen and (max-width: 300px) {
+    font-size: 1.8em;
   }
 
   &:hover {
@@ -37,6 +41,7 @@ const H3Title = styled.h3`
 `;
 
 function Title(props) {
+
   switch (props.type) {
     case 'header':
       return (
