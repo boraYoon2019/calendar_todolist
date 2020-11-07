@@ -13,8 +13,8 @@ class SignInModal extends React.Component {
     super();    
     this.state = {
       id: '',
-      pw: '',
-      pwConfirm: '',
+      password: '',
+      passwordConfirm: '',
     };
     this.handleIdChange = this.handleIdChange.bind(this);
     this.handlePwChange = this.handlePwChange.bind(this);
@@ -30,13 +30,13 @@ class SignInModal extends React.Component {
   }
 
   handlePwChange(event, type) {
-    if(type === 'pw') {      
+    if(type === 'password') {      
       this.setState({
-        pw: event.target.value
+        password: event.target.value
       });
     } else {
       this.setState({
-        pwConfirm: event.target.value
+        passwordConfirm: event.target.value
     }); 
     } 
   }
@@ -45,34 +45,67 @@ class SignInModal extends React.Component {
     event.preventDefault();
 
     const id = this.state.id;
-    const pw = this.state.pw;
-    const pwConfirm=this.state.pwConfirm;
+    const password = this.state.password;
+    const passwordConfirm=this.state.passwordConfirm;
 
-    if (id === '' || pw === '' || pwConfirm === '') {
+    const idInput = getElementById('E-mail');
+    const pwInput = getElementById('Password');
+    const pwConfirmInput = getElementById('Confirm');
+
+    if (id === '' || password === '' || passwordConfirm === '') {
       alert('빈칸을 모두 입력해주세요. :)');
       return;
     }
 
-    if (pw != pwConfirm) {
-      alert('비밀번호와 비밀번호 확인이 일치하지 않습니다. :)');
+    let regExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+
+    if (!(regExp.test(id))) {      
+      alert('올바른 이메일 형식이 아닙니다. :)');
+      idInput.focus();
       return;
     }
+
+    if(!/^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/.test(password)){            
+      alert('비밀번호는 숫자,영문자,특수문자 조합으로 8자리 이상 사용해주세요. :)');
+      pwInput.focus();
+      return false;
+    }
+
+    if(/(\w)\1\1\1/.test(password)){
+        alert('비밀번호 내 같은 문자를 4번 이상 사용하실 수 없습니다. :)');
+        pwInput.focus();
+        return false;
+    }
+    
+    if (password != passwordConfirm) {
+      alert('비밀번호와 비밀번호 확인이 일치하지 않습니다. :)');
+      pwInput.focus();
+      return;
+    }
+
+    if(password.search(id) > -1){
+        alert("비밀번호에 아이디가 포함되어 있습니다. :)");
+        pwInput.focus();
+        return false;
+    }
+
+    return true;
     
     // 로그인 사가로 전달
-    this.props.onSignUp(event, this.state.id, this.state.pw);
+    this.props.onSignUp(event, this.state.id, this.state.password);
   }
 
   onSignIn(event) {
     event.preventDefault();
 
     const id = this.state.id;
-    const pw = this.state.pw;
-    if (id === '' || pw === '') {
+    const password = this.state.password;
+    if (id === '' || password === '') {
       alert('E-Mail 혹은 Password를 입력해주세요. :)');
       return;
     }
-    this.props.onSignIn(event, this.state.id, this.state.pw);
-    // accounts/login 에 id, pw 전달하고 jwt 받아오는 로직의 사가 액션 디스패치
+    this.props.onSignIn(event, this.state.id, this.state.password);
+    // accounts/login 에 id, password 전달하고 jwt 받아오는 로직의 사가 액션 디스패치
   }
   
   noFunction(event) {
@@ -81,7 +114,7 @@ class SignInModal extends React.Component {
 
 render() {
   const { onXClick, status, goJoin, socialLoginOnSuccess, socialLoginOnFailure} = this.props;
-  const { id, pw, pwConfirm } = this.state;
+  const { id, password, passwordConfirm } = this.state;
   const { noFunction, handleIdChange, handlePwChange, onSignUp, onSignIn} = this;
 
   switch(status) {
@@ -92,8 +125,8 @@ render() {
           <Form onSubmit={noFunction}>
             <Title>Join Us!</Title>
             <IdPwInput label='E-mail' type='text' value={id} onChange={handleIdChange} ></IdPwInput>
-            <IdPwInput label='Password' type='password' value={pw} onChange={(event)=>handlePwChange(event, 'pw')}></IdPwInput>            
-            <IdPwInput label='Confirm' type='password' value={pwConfirm} onChange={(event)=>handlePwChange(event, 'pwConfirm')}></IdPwInput>
+            <IdPwInput label='Password' type='password' value={password} onChange={(event)=>handlePwChange(event, 'password')}></IdPwInput>            
+            <IdPwInput label='Confirm' type='password' value={passwordConfirm} onChange={(event)=>handlePwChange(event, 'passwordConfirm')}></IdPwInput>
             <ModalButtons 
               status={status}
               onSignUp={onSignUp}
@@ -109,7 +142,7 @@ render() {
           <Form onSubmit={noFunction}>
             <Title type='h2'>Welcome!</Title>
             <IdPwInput label='E-mail' type='text' value={id} onChange={handleIdChange}></IdPwInput>
-            <IdPwInput label='Password' type='password' value={pw} onChange={(event)=>handlePwChange(event, 'pw')}></IdPwInput>
+            <IdPwInput label='Password' type='password' value={password} onChange={(event)=>handlePwChange(event, 'password')}></IdPwInput>
             <ModalButtons 
               status={status}
               goJoin={goJoin}

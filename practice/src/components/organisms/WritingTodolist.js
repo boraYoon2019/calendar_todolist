@@ -87,7 +87,6 @@ class WritingTodolist extends PureComponent {
       alert('내용을 입력해주세요 :)');
       return;
     }
-    console.log('addTodolistItem');
     const list = this.state.list;      
       this.setState({ list: this.state.list.concat(
         {
@@ -105,7 +104,6 @@ class WritingTodolist extends PureComponent {
   deletelistItem(event) {
     event.preventDefault();
     const id=event.target.value;
-    console.log(id);
 
     this.setState( 
       { list: this.state.list.filter(item=>{ return item.id!=id; }) } 

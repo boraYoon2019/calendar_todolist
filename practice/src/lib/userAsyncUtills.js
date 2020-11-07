@@ -18,8 +18,17 @@ export const joinIn = (type, promiseCreator) => {
 
     } catch (error) {
 
+      switch (error.toString().split('Error: ')[1]) {
+        
+        case 'non_field_errors':
+          alert('이미 가입된 이메일이 있습니다.');
+          break;
+
+        default:
+          alert('회원가입 도중 오류가 발생하였습니다. 다시 시도해주세요.');
+          break;
+      }
       console.log(error);
-      alert(error.toString().split('Error: ')[1]);
       yield put({ type: ERROR });
 
     }

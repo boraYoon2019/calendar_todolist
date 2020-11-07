@@ -5,7 +5,7 @@ export const joinIn = async (action) => {
       username: action.payload.id, 
       password: action.payload.pw
     }
-    console.log(JSON.stringify(data));
+
     const response = await fetch(`http://15.165.223.171:8000/accounts/signup/`,
     {
         method: 'POST', // *GET, POST, PUT, DELETE, etc.
@@ -16,7 +16,6 @@ export const joinIn = async (action) => {
         body: JSON.stringify(data)
     });
     const result = await response.json();
-    console.log(result);
     
     if(!response.ok) {
 
@@ -49,20 +48,19 @@ export const signIn = async (action) => {
         },
         body: JSON.stringify(data)
     });
-    console.log(response);
+
     const result = await response.json();
     
-    console.log(result);
-    // if(!response.ok) {
+    if(!response.ok) {
 
-    //   switch (response.status) {
-    //     case 400:
-    //       throw new Error('non_field_errors');
+      switch (response.status) {
+        case 400:
+          throw new Error('non_field_errors');
 
-    //     default:
-    //       throw new Error(Object.getOwnPropertyNames(result)[0]);
-    //   }
-    // }
+        default:
+          throw new Error(Object.getOwnPropertyNames(result)[0]);
+      }
+    }
 
     return result;
 };

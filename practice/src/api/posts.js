@@ -60,7 +60,7 @@ export const addTodolist = async todolist_jsonObject => {
       });
 
       let rawData = await listResponse.json();
-      console.log('addTodolist', rawData);
+
       if(!listResponse.ok) {
         switch (listResponse.status) {
           case 400:
@@ -78,7 +78,6 @@ export const addTodolist = async todolist_jsonObject => {
       refinedData['feedback'] = rawData.feedback;      
       refinedData['comments'] = [];
 
-      console.log(refinedData.id);
       const itemsResponse = await fetch(`http://15.165.223.171:8000/api/posts/${refinedData.id}/list/`,
       {
         method: 'POST',
@@ -91,7 +90,6 @@ export const addTodolist = async todolist_jsonObject => {
       });
 
       const todolistItems_jsonArray = await itemsResponse.json();
-      console.log('addTodolistItems', todolistItems_jsonArray);
 
       if(!itemsResponse.ok) {
         switch (itemsResponse.status) {
@@ -147,8 +145,6 @@ export const deleteTodoItem = async (todolistId, itemId) => {
       }
     });
 
-    console.log('deleteTodoItem', response);
-
     if(!response.ok) {
       switch (response.status) {
         case 400:
@@ -165,7 +161,7 @@ export const deleteTodoItem = async (todolistId, itemId) => {
 
 export const updateTodoItem = async (todolistId, itemId, content) => {
   const token = localStorage.getItem('token');
-  console.log('updateTodoItem, id, content', todolistId,itemId,content);
+
     const response = await fetch(`http://15.165.223.171:8000/api/posts/${todolistId}/list/${itemId}/`,
     {
       method: 'PATCH',
@@ -178,7 +174,7 @@ export const updateTodoItem = async (todolistId, itemId, content) => {
     });
 
     const rawData = await response.json();
-    console.table(rawData);
+
     if(!response.ok) {
       switch (response.status) {
         case 400:
@@ -186,7 +182,6 @@ export const updateTodoItem = async (todolistId, itemId, content) => {
 
         default:
           // throw new Error(rawData[0],rawData[1]);
-          // console.log(response);
           throw new Error(rawData);
       }  
     }

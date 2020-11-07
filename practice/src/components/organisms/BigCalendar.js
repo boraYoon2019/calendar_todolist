@@ -30,7 +30,6 @@ eventStyleGetter() {
 				onSelectEvent={this.props.onSelectEvent}
 				onRangeChange={this.props.onRangeChange}
 				eventPropGetter={this.eventStyleGetter}
-				/* 스토어로 부터 전달받은 state에 따라 데이터 변경하기*/
 				events={this.props.events}
 				style={{ width:'100%', height:'80vh', margin:10, zIndex:0 }}
 			/>

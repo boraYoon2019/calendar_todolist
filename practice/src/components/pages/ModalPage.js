@@ -21,10 +21,6 @@ class ModalPage extends React.Component {
     this.onSignIn = this.onSignIn.bind(this);
   }
 
-  componentDidMount() {
-    console.log('ModalPage Component did mount.');
-  }
-
   successToSocialLogin() {
     // 로그인 모달 닫기
     this.props.closeModal();
@@ -33,7 +29,6 @@ class ModalPage extends React.Component {
   }
   
   goJoin(event) {
-    console.log(event);
     event.preventDefault();
     this.setState({
       status:'SIGNNING_UP'
@@ -72,11 +67,7 @@ class ModalPage extends React.Component {
             onSignUp={this.onSignUp}
             onSignIn={this.onSignIn}
             socialLoginOnSuccess={
-              (e) => {
-              console.log(e);
-              this.successToSocialLogin();
-              // 성공 시 사가를 통해 받아온 accesstoken 첨부해서 jwt 받아오는 로직 실행
-              }            
+              (e) => {this.successToSocialLogin();}            
             }
             socialLoginOnFailure={
               this.failToSocialLogin

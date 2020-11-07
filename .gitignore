@@ -1,5 +1,7 @@
 envs.js
 build/
+webpack.config.js
+package.json
 
 # Logs
 logs

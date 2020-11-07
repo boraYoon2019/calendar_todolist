@@ -19,6 +19,7 @@ export const getTodolists_byDate = (type, promiseCreator) => {
       console.log(error);
       switch (error.toString().split('Error: ')[1]) {
         case 'Signature has expired':
+          alert('다시 로그인해주세요. :)');
           yield put({ type: LOGIN_ERROR });
           console.log(error);
           localStorage.removeItem('token');

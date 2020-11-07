@@ -22,15 +22,11 @@ function EditText(props) {
 
   useEffect(() => {
     if (comparedStandard.current !== props.title) {
-      console.log(comparedStandard.current, '!==', props.title)
+      // console.log(comparedStandard.current, '!==', props.title)
       setValue(props.value);
       setReadOnly(true);      
       comparedStandard.current=props.title;
     }
-    // Your useEffect code here to be run on update
-    console.log("** EditText rendering!!!!");
-    console.log('prosp value, title', props.value, props.title);
-    console.log('value, title', value, props.title);
   });
   
 

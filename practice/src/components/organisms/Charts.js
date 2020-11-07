@@ -1,5 +1,4 @@
 import React, { PureComponent } from 'react';
-// import styled from 'styled-components';
 import {
 	BarChart,
 	Bar,
@@ -20,6 +19,7 @@ const data = [
 	},
 ];
 
+// 서버에서 받아오는 데이터가 없어 데이터와 연결하지 못하였음.
 
 function Charts(props) {
 

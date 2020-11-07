@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import HeaderContent from '../molecules/HeaderContent';
 
@@ -23,11 +23,7 @@ const Wrapper = styled.header`
 
 function Header (props) {
   const {modal, isSignIn, onSignButtonClick, onClickLogo, onWritingButtonClick, page} = props;
-  
-  useEffect(() => {
-    // 렌더링이 얼마나 되는지 확인용
-    console.log("Header rendering!!!!");
-  });
+
 
   return (
     <Wrapper>

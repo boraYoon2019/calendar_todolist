@@ -20,8 +20,6 @@ class MainPage extends PureComponent {
   }
 
   componentDidMount() {
-    console.log('MainPage Component did mount.');
-    console.log(localStorage.getItem('token'));
     const date = new Date();
     
     if(localStorage.getItem('token')!==null) {
@@ -65,7 +63,6 @@ class MainPage extends PureComponent {
           onSelectEvent={(data)=> { this.onSelectEvent(data) }}
           onRangeChange={ 
             (data) => {
-              // console.log(data);
               this.handleCalendarDataChange(data.start, 'onRangeChange');
             }
           }

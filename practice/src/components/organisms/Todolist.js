@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef} from 'react';
+import React, { useState, useRef} from 'react';
 import UlList from '../atoms/UlList';
 import ListLayout from '../atoms/ListLayout';
 import ListItem from '../molecules/ListItem';
@@ -18,15 +18,6 @@ function Todolist ({ todolist, changeChecked, editDetailPlan, deleteList, delete
       contents: "",
       display: 'none'
     });
-
-  useEffect(() => {
-    if (isInitialMount.current) {
-      isInitialMount.current = false;
-      console.table(clickedItemInfo);
-    } else {
-      //  console.log("** Todolist rendering!!!!");
-    }
-  });
 
   const listData = todolist !== undefined ? todolist : [];
 
@@ -71,8 +62,6 @@ function Todolist ({ todolist, changeChecked, editDetailPlan, deleteList, delete
         contents: todolist.comments[itemIndex].detail_context,
         display: 'inline-block'
       });
-      console.log('onItemclicked After setClickITem',clickedItemInfo.contents);
-      console.table(clickedItemInfo);
     }
   }
   
