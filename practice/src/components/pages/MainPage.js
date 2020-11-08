@@ -40,7 +40,6 @@ class MainPage extends PureComponent {
     localStorage.removeItem('token');
     this.props.setSignIn(false);
     alert('로그아웃 되었습니다 :)');
-    this.componentShouldUpdate();
   }
   
   render() {
