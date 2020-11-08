@@ -39,7 +39,7 @@ function IdPwInput(props) {
 	return (
 		<Container>
 		<Label>{props.label}</Label>
-		<Input id={props.label} type={props.type} value={props.value} onChange={props.onChange}/>
+		<Input id={props.label} type={props.type} value={props.value} onChange={props.onChange} placeholder={props.placeholder}/>
 		</Container>
 	);
 }

@@ -5,12 +5,12 @@ import moment from "moment"
 
 export default class DatePicker extends Component {
   
-  constructor() {
+  constructor(props) {
     super();
     // 라이브러리에서 필요한 date는 moment 객체 date
     this.state = {
       focused: false,
-      date: moment(new Date())
+      date: moment(new Date(props.date))
     }
     this.onDateChange = this.onDateChange.bind(this);
     this.onFocusChange = this.onFocusChange.bind(this);
@@ -29,6 +29,7 @@ export default class DatePicker extends Component {
 
   render() {
     const { focused } = this.state;
+    const { date } = this.state;
     const { onFocusChange, onDateChange } = this;
 
     return (
@@ -39,7 +40,7 @@ export default class DatePicker extends Component {
         disableScroll
         numberOfMonths={1}
         readOnly
-        date={moment(new Date(this.props.date))}
+        date={date}
         onDateChange={onDateChange} // PropTypes.func.isRequired
         focused={focused} // PropTypes.bool > 클릭했을 때 피커 띄워주고 닫도록 해주는 역할
         onFocusChange={onFocusChange} // PropTypes.func.isRequired

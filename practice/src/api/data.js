@@ -48,7 +48,7 @@ export const getCalendarData = async (date, when) => {
       let newData = {};
       newData['title'] = obj.title;
       newData['start'] = obj.start_at;
-      newData['end'] = obj.end_at !== null? obj.end_at: obj.start_at;
+      newData['end'] = obj.start_at;
 
       return newData;
    });

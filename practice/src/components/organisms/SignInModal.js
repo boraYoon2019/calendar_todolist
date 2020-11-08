@@ -48,10 +48,6 @@ class SignInModal extends React.Component {
     const password = this.state.password;
     const passwordConfirm=this.state.passwordConfirm;
 
-    const idInput = getElementById('E-mail');
-    const pwInput = getElementById('Password');
-    const pwConfirmInput = getElementById('Confirm');
-
     if (id === '' || password === '' || passwordConfirm === '') {
       alert('빈칸을 모두 입력해주세요. :)');
       return;
@@ -61,32 +57,27 @@ class SignInModal extends React.Component {
 
     if (!(regExp.test(id))) {      
       alert('올바른 이메일 형식이 아닙니다. :)');
-      idInput.focus();
       return;
     }
 
     if(!/^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/.test(password)){            
       alert('비밀번호는 숫자,영문자,특수문자 조합으로 8자리 이상 사용해주세요. :)');
-      pwInput.focus();
       return false;
     }
 
     if(/(\w)\1\1\1/.test(password)){
         alert('비밀번호 내 같은 문자를 4번 이상 사용하실 수 없습니다. :)');
-        pwInput.focus();
-        return false;
+        return;
     }
     
     if (password != passwordConfirm) {
       alert('비밀번호와 비밀번호 확인이 일치하지 않습니다. :)');
-      pwInput.focus();
       return;
     }
 
     if(password.search(id) > -1){
         alert("비밀번호에 아이디가 포함되어 있습니다. :)");
-        pwInput.focus();
-        return false;
+        return;
     }
 
     return true;
@@ -124,9 +115,9 @@ render() {
           <Xbutton onClick={onXClick}/>
           <Form onSubmit={noFunction}>
             <Title>Join Us!</Title>
-            <IdPwInput label='E-mail' type='text' value={id} onChange={handleIdChange} ></IdPwInput>
-            <IdPwInput label='Password' type='password' value={password} onChange={(event)=>handlePwChange(event, 'password')}></IdPwInput>            
-            <IdPwInput label='Confirm' type='password' value={passwordConfirm} onChange={(event)=>handlePwChange(event, 'passwordConfirm')}></IdPwInput>
+            <IdPwInput label='E-mail' type='text' value={id} onChange={handleIdChange}></IdPwInput>
+            <IdPwInput label='Password' type='password' value={password} onChange={(event)=>handlePwChange(event, 'password')} placeholder='영문자, 숫자, 특수문자 조합 8자 이상'></IdPwInput>            
+            <IdPwInput label='Confirm' type='password' value={passwordConfirm} onChange={(event)=>handlePwChange(event, 'passwordConfirm')} placeholder='입력해주세요 :)'></IdPwInput>
             <ModalButtons 
               status={status}
               onSignUp={onSignUp}
