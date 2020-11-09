@@ -70,7 +70,7 @@ export const handle_data_actions = (type, key) => {
         return {
           ...state,
           isSignIn: true,
-          [key]: dataReducerUtils.success(action.payload)
+          [key]: dataReducerUtils.success(action.payload.reverse())
         };
       case ERROR:
         return {
