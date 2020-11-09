@@ -16,9 +16,11 @@ export const getCalendar = (type, promiseCreator) => {
       yield put({ type: SUCCESS, payload: payload}); 
 
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       switch (error.toString().split('Error: ')[1]) {
-        case 'Signature has expired':    
+
+        case 'Signature has expired':          
+          alert('다시 로그인해주세요. :)');
           localStorage.removeItem('token');
           yield put({ type: LOGIN_ERROR });
           break;
@@ -37,28 +39,17 @@ export const getCalendar = (type, promiseCreator) => {
 
 export const dataReducerUtils = {
   initial: (initialData = []) => ({
-    loading: false,
     data: initialData,
     error: null
   }),
-  // 로딩중 상태. prevState의 경우엔 기본값은 null 이지만
-  // 따로 값을 지정하면 null 로 바꾸지 않고 다른 값을 유지시킬 수 있다.
-  loading: (prevState = []) => ({
-    loading: true,
-    data: prevState,
-    error: null
-  }),
-
   // 성공 상태
   success: payload => ({
-    loading: false,
     data: payload,
     error: null
   }),
 
   // 실패 상태
   error: error => ({
-    loading: false,
     data: [],
     error: error
   })
@@ -68,18 +59,13 @@ export const dataReducerUtils = {
 // 비동기 관련 액션들을 처리하는 리듀서.
 // type 은 액션의 타입, key 는 상태의 key (예: calendarData)임.
 // 날짜별로 처리하는 유틸함수
-export const handle_data_actions = (type, key, keepData = false) => {
+export const handle_data_actions = (type, key) => {
   const [SUCCESS, ERROR, LOGIN_ERROR] = [`${type}_SUCCESS`, `${type}_ERROR`, `${type}_LOGIN_ERROR`];
 
   // console.log('handle_DataAsyncActions');
   return (state, action) => {
 
     switch (action.type) {
-      case type:
-        return {
-          ...state,
-          [key]: dataReducerUtils.loading(keepData ? state[key].data : null)
-        };
       case SUCCESS:
         return {
           ...state,

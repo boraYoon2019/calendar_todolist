@@ -11,17 +11,18 @@ export const getTodolists_byDate = (type, promiseCreator) => {
     try {
       const payload = yield call(promiseCreator, action.date);
       
-      console.table(payload);
-      yield put({ type: SUCCESS, payload: payload}); 
+      // console.table(payload);
+      yield put({ type: SUCCESS, date:action.date, payload: payload}); 
 
     } catch (error) {
 
-      console.log(error);
+      // console.log(error);
       switch (error.toString().split('Error: ')[1]) {
+
         case 'Signature has expired':
           alert('다시 로그인해주세요. :)');
           yield put({ type: LOGIN_ERROR });
-          console.log(error);
+
           localStorage.removeItem('token');
           yield put({ type: 'GO_TO_HOME' });
           break;
@@ -45,14 +46,13 @@ export const addTodolist_withList = (type, promiseCreator) => {
     try {
       
       const payload = yield call(promiseCreator, action.list);
-      // 여기서 아이템(todolist) 추가!
-      console.log(payload);
+      // console.log(payload);
       yield put({ type: SUCCESS, list: payload}); 
 
     } catch (error) {
       
       // 추가에 실패했다고 알리는 alert 삽입
-      console.log(error);
+      // console.log(error);
       yield put({ type: ERROR, error: error, list: error});
     }
   };
@@ -73,7 +73,7 @@ export const deleteTodolist_byId = (type, promiseCreator) => {
     } catch (error) {
 
       // 삭제에 실패했다고 알리는 alert 삽입
-      console.log(error);
+      // console.log(error);
       yield put({ type: ERROR, error: error});
     }
   };
@@ -81,21 +81,19 @@ export const deleteTodolist_byId = (type, promiseCreator) => {
 
 // todolist 아이템 삭제 사가
 export const deleteTodoItem_byId = (type, promiseCreator) => {
-console.log('deleteTodoItem_byId');
   const [SUCCESS, ERROR] = [`${type}_SUCCESS`, `${type}_ERROR`];
 
   return function* deleteItemSaga(action) {
     
     try {
       
-      console.log('deleteTodoItem_byId payload');
       const payload = yield call(promiseCreator, action.todolistId, action.itemId);
-      console.table(payload);
+      // console.table(payload);
       yield put({ type: SUCCESS, todolistId: action.todolistId, itemId: action.itemId}); 
 
     } catch (error) {
       // 삭제에 실패했다고 알리는 alert 삽입
-      console.log(error);
+      // console.log(error);
       yield put({ type: ERROR, error: error});
     }
   };
@@ -108,14 +106,14 @@ export const updateTodoItem_withItem = (type, promiseCreator) => {
   const [SUCCESS, ERROR] = [`${type}_SUCCESS`, `${type}_ERROR`];
 
   return function* addListSaga(action) {
-    console.log(action.content);
+
     try {
       const payload = yield call(promiseCreator, action.todolistId, action.itemId, action.content);
       yield put({ type: SUCCESS, todolistId: action.todolistId, itemId: action.itemId, content: payload});
 
     } catch (error) {
 
-      console.log(error);
+      // console.log(error);
       yield put({ type: ERROR, error: error});
     }
   };
@@ -128,13 +126,6 @@ export const postReducerUtils = {
     data: initialData,
     error: null
   }),
-
-  loading: (prevState = []) => ({
-    initial: false,
-    data: prevState,
-    error: null
-  }),
-
   // 성공 상태
   success: payload => ({
     initial: false,
@@ -150,21 +141,16 @@ export const postReducerUtils = {
   }),
 };
 
-export const handle_getLists_actions = (type, key, keepData = false) => {
+export const handle_getLists_actions = (type, key) => {
   const [SUCCESS, ERROR, LOGIN_ERROR] = [`${type}_SUCCESS`, `${type}_ERROR`,  `${type}_LOGIN_ERROR`];
 
   return (state, action) => {
 
     switch (action.type) {
-      case type:
-        return {
-          ...state,
-          date : moment(new Date(action.date)).format('YYYY-MM-DD'),
-          [key]: postReducerUtils.loading(keepData ? state[key].data : null)
-        };
       case SUCCESS:
         return {
           ...state,
+          date : moment(new Date(action.date)).format('YYYY-MM-DD'),
           [key]: postReducerUtils.success(action.payload.reverse())
         };
       case ERROR:
@@ -218,10 +204,8 @@ export const handle_deleteList_actions = (type) => {
     switch (action.type) {
       case SUCCESS:
         // 리스트 변경해주기
-        // console.log(action.id);
         const index = state.todolists.data.findIndex(listObject => listObject.id == action.id);
         // console.log(index);
-        // console.log(state.todolists.data);
         const newData = state.todolists.data.slice();
         // console.log(newData);
         newData.splice(index, 1);
@@ -253,13 +237,9 @@ export const handle_deleteItem_actions = (type) => {
         // 해당 아이템만 제거해 주기
         // 해당 newData로 변경        
         const listIndex = state.todolists.data.findIndex(listObject => listObject.id == action.todolistId);
-        console.log('listIndex',listIndex);
         const newData = state.todolists.data.slice();
-        console.log('newData', newData);
         const itemIndex = newData[listIndex].comments.findIndex(listObject => listObject.id == action.itemId);
-        console.log('itemIndex',itemIndex);
         newData[listIndex].comments.splice(itemIndex, 1);
-        console.log(newData);
         
         return {
           ...state,
@@ -284,14 +264,10 @@ export const handle_updateItem_actions = (type) => {
     switch (action.type) {
       case SUCCESS:
         const newData = state.todolists.data.slice();
-        console.log('newData', newData);
         const listIndex = newData.findIndex(listObject => listObject.id == action.todolistId);
-        console.log('listIndex',listIndex);
         const itemIndex = newData[listIndex].comments.findIndex(listObject => listObject.id == action.itemId);
-        console.log('itemIndex',itemIndex);
         newData[listIndex].comments[itemIndex] = action.content;
-        console.log(newData);
-        
+
         return {
           ...state,
           todolists: postReducerUtils.success(newData)

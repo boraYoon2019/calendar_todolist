@@ -41,23 +41,17 @@ class SignInModal extends React.Component {
     } 
   }
 
-  onSignUp(event) {
-    event.preventDefault();
-
-    const id = this.state.id;
-    const password = this.state.password;
-    const passwordConfirm=this.state.passwordConfirm;
-
+  checkBeforeSignUp(id, password, passwordConfirm) {
     if (id === '' || password === '' || passwordConfirm === '') {
       alert('빈칸을 모두 입력해주세요. :)');
-      return;
+      return false;
     }
 
     let regExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
 
     if (!(regExp.test(id))) {      
       alert('올바른 이메일 형식이 아닙니다. :)');
-      return;
+      return false;
     }
 
     if(!/^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/.test(password)){            
@@ -67,23 +61,33 @@ class SignInModal extends React.Component {
 
     if(/(\w)\1\1\1/.test(password)){
         alert('비밀번호 내 같은 문자를 4번 이상 사용하실 수 없습니다. :)');
-        return;
+        return false;
     }
     
     if (password != passwordConfirm) {
       alert('비밀번호와 비밀번호 확인이 일치하지 않습니다. :)');
-      return;
+      return false;
     }
 
     if(password.search(id) > -1){
         alert("비밀번호에 아이디가 포함되어 있습니다. :)");
-        return;
+        return false;
     }
 
     return true;
-    
-    // 로그인 사가로 전달
-    this.props.onSignUp(event, this.state.id, this.state.password);
+  }
+
+  onSignUp(event) {
+    event.preventDefault();
+
+    const id = this.state.id;
+    const password = this.state.password;
+    const passwordConfirm=this.state.passwordConfirm;
+
+    if(this.checkBeforeSignUp(id, password, passwordConfirm)) {
+      // 로그인 사가로 전달
+      this.props.onSignUp(event, id, password);
+    }  
   }
 
   onSignIn(event) {

@@ -32,7 +32,7 @@ class MainPage extends PureComponent {
   }
 
   onSelectEvent(data) {
-    this.props.requestTodolists(data.start);
+    this.props.setDate(data.start);
     this.props.history.push('/writing');
   }
   
@@ -80,12 +80,14 @@ const mapStateToProps = (state) => ({
   isSignIn: state.signInOrOut.isSignIn,
   modal: state.signInOrOut.modal,
   calendarData: state.signInOrOut.calendarData,
+  date: state.signInOrOut.date
 });
 
 const mapDispatchToProps = (dispatch) => ({
   setSignIn: (boolean) => dispatch(actions.setSignIn(boolean)),
   showModal: () => dispatch(actions.showModal()),
   closeModal: () => dispatch(actions.closeModal()),
+  setDate: (date) => dispatch(actions.setDate(date)),
   goToWriting: () => dispatch(actions.goToWriting()),
   requestCalendarData: (date, when) => dispatch(actions.requestCalendarData(date, when)),
   requestTodolists: (date) => dispatch(actions.requestTodolists(date))

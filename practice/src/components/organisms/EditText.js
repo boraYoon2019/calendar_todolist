@@ -22,7 +22,6 @@ function EditText(props) {
 
   useEffect(() => {
     if (comparedStandard.current !== props.title) {
-      // console.log(comparedStandard.current, '!==', props.title)
       setValue(props.value);
       setReadOnly(true);      
       comparedStandard.current=props.title;
@@ -36,7 +35,6 @@ function EditText(props) {
 
   function onClickTextArea(event) {
     setReadOnly(!readOnly);
-    console.log('onClickTextArea', event.target);
   }
 
   function onFinishEdit() {

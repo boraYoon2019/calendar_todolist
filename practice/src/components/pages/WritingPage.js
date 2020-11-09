@@ -30,7 +30,7 @@ function WritingPage(props) {
       props.history.push('/');
 
     } else if(localStorage.getItem('token')!==null && signInOrOut.todolists.initial===true){
-      dispatch(requestTodolists(new Date));
+      dispatch(requestTodolists(new Date(signInOrOut.date)));
 
     }
     // 렌더링이 얼마나 되는지 확인용

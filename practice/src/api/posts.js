@@ -118,6 +118,7 @@ export const deleteTodolist = async todolistId => {
       }
     });
 
+    // console.log(response);
     if(!response.ok) {
       switch (response.status) {
         case 400:
@@ -128,7 +129,6 @@ export const deleteTodolist = async todolistId => {
           throw new Error(response.json());
       }  
     }
-
     return response;
 
 };

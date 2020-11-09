@@ -53,6 +53,8 @@ const GET_CALENDAR_SUCCESS = 'GET_CALENDAR_SUCCESS'; // 요청 성공
 const GET_CALENDAR_ERROR = 'GET_CALENDAR_ERROR'; // 요청 실패
 const GET_CALENDAR_LOGIN_ERROR = 'GET_CALENDAR_LOGIN_ERROR'; // 로그인 무효 요청 실패
 
+const SET_DATE = 'SET_DATE';
+
 // todolist 데이터 조회하기
 const GET_TODOLISTS = 'GET_TODOLISTS';
 const GET_TODOLISTS_SUCCESS = 'GET_TODOLISTS_SUCCESS';
@@ -99,6 +101,9 @@ export const goToWriting = () => ({ type: GO_TO_WRITING });
 export const requestCalendarData = (date, when) => ({ type: GET_CALENDAR, date: date, when: when});
 
 // todolist 관련
+export const setDate = date => {
+  return { type: SET_DATE, date: date}
+};
 export const requestTodolists = (date) => ({ type: GET_TODOLISTS, date: date });
 export const addTodolist = (list) => ({ type: ADD_TODOLIST, list: list });
 export const deleteTodolist = (todolistId) => ({ type: DELETE_TODOLIST, id: todolistId });
@@ -158,7 +163,7 @@ const initialState = {
   modal: false,
   join: userReducerUtils.initial(),
   calendarData: dataReducerUtils.initial(),
-  date: moment(new Date()).format('YYYY-MM-DD'),
+  date: moment(new Date()),
   todolists: postReducerUtils.initial()
 };
 
@@ -182,6 +187,11 @@ const reducers = (state = initialState, action) => {
         ...state,
         isSignIn: action.boolean
       };
+    case SET_DATE:      
+      return {
+        ...state,
+        date: moment(new Date(action.date))
+      };
     case JOININ:
     case JOININ_SUCCESS:
     case JOININ_ERROR:
@@ -196,13 +206,13 @@ const reducers = (state = initialState, action) => {
     case GET_CALENDAR_SUCCESS:
     case GET_CALENDAR_ERROR:
     case GET_CALENDAR_LOGIN_ERROR:
-      return handle_data_actions(GET_CALENDAR, 'calendarData', true)(state, action);
+      return handle_data_actions(GET_CALENDAR, 'calendarData')(state, action);
 
     case GET_TODOLISTS:
     case GET_TODOLISTS_SUCCESS:
     case GET_TODOLISTS_ERROR:
     case GET_TODOLIST_LOGIN_ERROR:
-      return handle_getLists_actions(GET_TODOLISTS, 'todolists', true)(state, action);
+      return handle_getLists_actions(GET_TODOLISTS, 'todolists')(state, action);
 
     case ADD_TODOLIST:
     case ADD_TODOLIST_SUCCESS:

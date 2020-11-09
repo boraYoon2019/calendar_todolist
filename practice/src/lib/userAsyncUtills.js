@@ -6,15 +6,13 @@ export const joinIn = (type, promiseCreator) => {
 
   return function* joinSaga(action) {
     
-    console.log('modules/userAsyncUtills: function* joinSaga', action);
-    
     try {
       // call > 함수 동기적 호출 = 응담을 받은 후 전달할 파라미터 두번째 인자에서부터 전달
       const payload = yield call(promiseCreator, action);
-
+      alert('회원가입에 성공하였습니다. 로그인 해주세요. :)');
       // call을 통해 받은 결과값으로 액션 함수로 진행시킴.
-      console.log('userAsyncUtils.js / suc :', payload);
-      yield put({ type: SUCCESS }); 
+
+      yield put({ type: SUCCESS });
 
     } catch (error) {
 
@@ -28,7 +26,7 @@ export const joinIn = (type, promiseCreator) => {
           alert('회원가입 도중 오류가 발생하였습니다. 다시 시도해주세요.');
           break;
       }
-      console.log(error);
+      // console.log(error);
       yield put({ type: ERROR });
 
     }
@@ -46,12 +44,12 @@ export const signIn = (type, promiseCreator) => {
       localStorage.setItem('token', payload.token);
 
       yield put({ type: SUCCESS});
-      console.log('userAsync token',localStorage.getItem('token'));
+
       yield put({ type: 'GET_CALENDAR', date: new Date(), when: 'login' });   
 
     } catch (error) {
 
-      console.log(error);
+      // console.log(error);
       switch (error.toString().split('Error: ')[1]) {
         
         case 'non_field_errors':
