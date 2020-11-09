@@ -58,7 +58,6 @@ function WritingPage(props) {
     dispatch(updateTodolistItem(postId, itemId, content));
   }
 
-
   const deleteList = (id) => {
     dispatch(deleteTodolist(id)); 
   }
