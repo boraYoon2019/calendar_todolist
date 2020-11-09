@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect,useRef} from 'react';
 import WritingTemplate from '../templates/WritingTemplate';
 import WritingTodolist from '../organisms/WritingTodolist';
 import Todolist from '../organisms/Todolist';
@@ -20,23 +20,33 @@ from '../../modules/signInOrOut';
 function WritingPage(props) {
 
   const dispatch = useDispatch();
-
   const signInOrOut = useSelector((state) => state.signInOrOut);
 
+  const initialRendering = useRef(true);
+
   useEffect(() => {
+    if (initialRendering.current) { // 첫번째 렌더링 시 (=componentDidMount)
+      initialRendering.current=false;
 
-    if(localStorage.getItem('token')===null ) {  
-      alert('로그인이 필요한 페이지입니다. :)');
-      props.history.push('/');
+      if(localStorage.getItem('token')===null ) {  
+        alert('로그인이 필요한 페이지입니다. :)');
+        props.history.push('/');
 
-    } else if(localStorage.getItem('token')!==null && signInOrOut.todolists.initial===true){
-      dispatch(requestTodolists(new Date(signInOrOut.date)));
-
+      } else {
+        // 첫 페이지로 writing 페이지 들어왔을 때, 따로 데이터 받아와야 함.
+        if(signInOrOut.todolists.initial===true){ 
+          dispatch(requestTodolists(new Date(signInOrOut.date)));
+        }
+      }
+    
+    } else { // 리렌더링 시 (=componentShouldUpdate)
+      if(localStorage.getItem('token')===null ) {
+        alert('로그인이 필요한 페이지입니다. :)');
+        props.history.push('/');  
+      }      
     }
-    // 렌더링이 얼마나 되는지 확인용
-    // console.log("WritingPage rendering!!!!");
   });
-
+  
   const onDateChange = (date) => {
     dispatch(requestTodolists(date));
   }
@@ -69,7 +79,7 @@ function WritingPage(props) {
     list.start_at=signInOrOut.date;
     list.end_at=signInOrOut.date;
 
-    dispatch(addTodolist(noDateList));
+    dispatch(addTodolist(list));
   }
   
   const onClickLogo = () =>  {
