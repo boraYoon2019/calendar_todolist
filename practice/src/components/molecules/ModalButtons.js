@@ -4,11 +4,9 @@ import Button from '../atoms/Button';
 
 const Sizediv = styled.div`
   display:flex;
-  flex-flow: row nowrap;
+  flex-flow: row-reverse nowrap;
   align-items: center;
   padding-top: 1.5em;
-  justify-content: flex-end;
-
 	@media screen and (max-width: 414px) {    
     padding: 0.5em;
     padding-top: 1em;
@@ -27,9 +25,9 @@ function ModalButtons({status, goJoin, onSignUp, onSignIn}) {
       );
     default: 
       return (
-        <Sizediv>
-          <Button color='primary' onClick={goJoin}>Join</Button>
+        <Sizediv>        
           <Button type='submit' onClick={onSignIn}>Sign In</Button>
+          <Button color='primary' onClick={goJoin}>Join</Button>
         </Sizediv>
       )
   }

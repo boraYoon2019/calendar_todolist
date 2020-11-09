@@ -33,7 +33,6 @@ class MainPage extends PureComponent {
 
   onSelectEvent(data) {
     this.props.requestTodolists(data.start);
-    // window.setTimeout(()=>this.props.history.push('/writing'), 200);
     this.props.history.push('/writing');
   }
   

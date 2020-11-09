@@ -20,7 +20,6 @@ class SignInModal extends React.Component {
     this.handlePwChange = this.handlePwChange.bind(this);
     this.onSignUp = this.onSignUp.bind(this);
     this.onSignIn = this.onSignIn.bind(this);
-    this.noFunction = this.noFunction.bind(this);
   }
 
   handleIdChange(event) {
@@ -100,24 +99,19 @@ class SignInModal extends React.Component {
       return;
     }
     this.props.onSignIn(event, this.state.id, this.state.password);
-    // accounts/login 에 id, password 전달하고 jwt 받아오는 로직의 사가 액션 디스패치
   }
   
-  noFunction(event) {
-    event.preventDefault();
-  }
-
 render() {
   const { onXClick, status, goJoin, socialLoginOnSuccess, socialLoginOnFailure} = this.props;
   const { id, password, passwordConfirm } = this.state;
-  const { noFunction, handleIdChange, handlePwChange, onSignUp, onSignIn} = this;
+  const { handleIdChange, handlePwChange, onSignUp, onSignIn} = this;
 
   switch(status) {
     case 'SIGNNING_UP':
       return (
         <ModalLayout>        
           <Xbutton onClick={onXClick}/>
-          <Form onSubmit={noFunction}>
+          <Form>
             <Title>Join Us!</Title>
             <IdPwInput label='E-mail' type='text' value={id} onChange={handleIdChange}></IdPwInput>
             <IdPwInput label='Password' type='password' value={password} onChange={(event)=>handlePwChange(event, 'password')} placeholder='영문자, 숫자, 특수문자 조합 8자 이상'></IdPwInput>            
@@ -134,7 +128,7 @@ render() {
       return (
         <ModalLayout>        
           <Xbutton onClick={onXClick}/>
-          <Form onSubmit={noFunction}>
+          <Form>
             <Title type='h2'>Welcome!</Title>
             <IdPwInput label='E-mail' type='text' value={id} onChange={handleIdChange}></IdPwInput>
             <IdPwInput label='Password' type='password' value={password} onChange={(event)=>handlePwChange(event, 'password')}></IdPwInput>
