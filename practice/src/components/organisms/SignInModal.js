@@ -121,7 +121,7 @@ render() {
             <Title>Join Us!</Title>
             <IdPwInput label='E-mail' type='text' value={id} onChange={handleIdChange}></IdPwInput>
             <IdPwInput label='Password' type='password' value={password} onChange={(event)=>handlePwChange(event, 'password')} placeholder='영문자, 숫자, 특수문자 조합 8자 이상'></IdPwInput>            
-            <IdPwInput label='Confirm' type='password' value={passwordConfirm} onChange={(event)=>handlePwChange(event, 'passwordConfirm')} placeholder='입력해주세요 :)'></IdPwInput>
+            <IdPwInput label='PWConfirm' type='password' value={passwordConfirm} onChange={(event)=>handlePwChange(event, 'passwordConfirm')} placeholder='입력해주세요 :)'></IdPwInput>
             <ModalButtons 
               status={status}
               onSignUp={onSignUp}
