@@ -44,4 +44,4 @@ function ModalTemplate(props) {
 		);
 }
 
-export default ModalTemplate;
+export default React.memo(ModalTemplate);

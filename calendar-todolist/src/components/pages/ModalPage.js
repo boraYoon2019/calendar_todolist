@@ -3,7 +3,7 @@ import ModalTemplate from '../templates/ModalTemplate';
 import SignInModal from '../organisms/Modal';
 
 import { connect } from 'react-redux'
-import * as actions from '../../modules/signInOrOut';
+import * as actions from '../../modules/redux';
 'use strict';
 class ModalPage extends React.Component {
 
@@ -80,9 +80,9 @@ class ModalPage extends React.Component {
 };
 
 const mapStateToProps = (state) => ({
-  isSignIn: state.signInOrOut.isSignIn,
-  modal: state.signInOrOut.modal,
-  join: state.signInOrOut.join
+  isSignIn: state.redux.isSignIn,
+  modal: state.redux.modal,
+  join: state.redux.join
 });
 
 const mapDispatchToProps = (dispatch) => ({

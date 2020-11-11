@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux';
-import signInOrOut, { saga } from './signInOrOut';
+import redux, { saga } from './redux';
 import { all } from 'redux-saga/effects';
 
 const rootReducer = combineReducers({
-  signInOrOut
+  redux
 });
 
 

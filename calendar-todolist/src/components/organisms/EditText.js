@@ -66,4 +66,4 @@ function EditText(props) {
     );
 }
 
-export default React.memo(EditText);
+export default EditText;

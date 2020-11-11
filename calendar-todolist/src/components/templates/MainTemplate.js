@@ -12,7 +12,6 @@ const Div = styled.div`
 const MainTemp = styled.div`
 	z-index: -1;
 `;
-// 
 
 function MainTemplate(props) {
 	return (
@@ -25,4 +24,4 @@ function MainTemplate(props) {
 	);
 }
 
-export default MainTemplate;
+export default React.memo(MainTemplate);

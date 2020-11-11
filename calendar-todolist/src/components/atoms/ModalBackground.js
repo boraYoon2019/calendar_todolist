@@ -23,4 +23,4 @@ const ModalBackground = (props) => {
 	);
 }
 
-export default ModalBackground;
+export default React.memo(ModalBackground);

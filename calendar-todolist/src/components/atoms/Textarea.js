@@ -36,4 +36,4 @@ function TextArea({value,onChange,onClick,readOnly,placeholder}){
 	);
 }
 
-export default React.memo(TextArea);
+export default TextArea;

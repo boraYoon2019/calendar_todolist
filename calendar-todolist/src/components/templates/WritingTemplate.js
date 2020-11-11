@@ -35,4 +35,4 @@ function WritingTemplate(props) {
 	);
 }
 
-export default WritingTemplate;
+export default React.memo(WritingTemplate);

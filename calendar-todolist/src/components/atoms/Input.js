@@ -30,9 +30,6 @@ const TextInput = styled.input`
 `;
 
 function Input(props){
-  useEffect(() => {
-    console.log('rendering!');
-  });
 
   function noKeyPress(event) {
     if( event.key== 'Enter' ){
@@ -55,4 +52,4 @@ function Input(props){
   );
 }
 
-export default React.memo(Input);
+export default Input;

@@ -13,14 +13,14 @@ import {
   setSignIn, goToHome, 
   requestTodolists, addTodolist, deleteTodolist, 
   deleteTodolistItem, updateTodolistItem } 
-from '../../modules/signInOrOut';
+from '../../modules/redux';
 
 'use strict';
 
 function WritingPage(props) {
 
   const dispatch = useDispatch();
-  const signInOrOut = useSelector((state) => state.signInOrOut);
+  const redux = useSelector((state) => state.redux);
 
   const initialRendering = useRef(true);
 
@@ -34,8 +34,8 @@ function WritingPage(props) {
 
       } else {
         // 첫 페이지로 writing 페이지 들어왔을 때, 따로 데이터 받아와야 함.
-        if(signInOrOut.todolists.initial===true){ 
-          dispatch(requestTodolists(new Date(signInOrOut.date)));
+        if(redux.todolists.initial===true){ 
+          dispatch(requestTodolists(new Date(redux.date)));
         }
       }
     
@@ -76,9 +76,9 @@ function WritingPage(props) {
   }  
   const makeList = (noDateList) => {
     const list = noDateList;
-    list.start_at=signInOrOut.date;
+    list.start_at=redux.date;
     // console.log(list.start_at);
-    list.end_at=signInOrOut.date;
+    list.end_at=redux.date;
     // console.log(list);
 
     dispatch(addTodolist(list));
@@ -88,7 +88,7 @@ function WritingPage(props) {
     dispatch(goToHome());
   }
 
-  const data = signInOrOut.todolists.data;
+  const data = redux.todolists.data;
   const listsData = data !== undefined ? data : [];
 
   const todolists = listsData.map((list, index)=>(
@@ -108,8 +108,8 @@ function WritingPage(props) {
 
       headerSection={(
         <Header 
-          modal={signInOrOut.modal}
-          isSignIn={signInOrOut.isSignIn}
+          modal={redux.modal}
+          isSignIn={redux.isSignIn}
           onSignButtonClick={logout}
           onClickLogo={onClickLogo}
           page='writing'
@@ -120,7 +120,7 @@ function WritingPage(props) {
         <>
           <DatePicker 
             onDateChange={onDateChange}
-            date={signInOrOut.date}
+            date={redux.date}
           />
           <WritingTodolist
             makeList={makeList}

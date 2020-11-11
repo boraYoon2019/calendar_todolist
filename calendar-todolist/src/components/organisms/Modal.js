@@ -107,11 +107,6 @@ class SignInModal extends React.Component {
     }
     this.props.onSignIn(event, this.state.id, this.state.password);
   }
-
-  componentDidMount() {
-    // alert('현재 카카오 로그인과 차트는 서버쪽 로직이 구현되지 않아 동작하지 않습니다. 참고 부탁드립니다! 회원가입없이 이용해보시려면 ID: admin / PW: 123 을 통해 로그인 가능합니다');
-    console.log('모달 포탈?');
-  }
   
 render() {
   const { onXClick, status, goJoin, socialLoginOnSuccess, socialLoginOnFailure} = this.props;
@@ -160,7 +155,7 @@ render() {
         return (
           <ModalLayout>        
             <Xbutton onClick={onXClick}/>
-              <Title type='h2'>INFORMATION</Title>
+              <Title color='red'>INFORMATION</Title>
               <Content>
               안녕하세요! 반갑습니다. 😊<br></br>
               현재 카카오 로그인과 차트는 서버쪽 로직이 구현되지 않아 동작하지 않습니다.

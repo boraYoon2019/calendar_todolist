@@ -9,7 +9,7 @@ import SignInModal from '../organisms/Modal';
 
 // 리덕스
 import { connect } from 'react-redux'
-import * as actions from '../../modules/signInOrOut';
+import * as actions from '../../modules/redux';
 
 'use strict';
 // 리덕스 스토어의 상태를 조회하거나, 액션을 디스패치 할 수 있는 컴포넌트.
@@ -31,7 +31,6 @@ class MainPage extends PureComponent {
     if(localStorage.getItem('token')!==null) {
       this.handleCalendarDataChange(date, 'login');
     }
-    console.log(this.state.first);
   }
 
   handleCalendarDataChange(stringDate, when) {
@@ -101,10 +100,10 @@ class MainPage extends PureComponent {
 }
 
 const mapStateToProps = (state) => ({
-  isSignIn: state.signInOrOut.isSignIn,
-  modal: state.signInOrOut.modal,
-  calendarData: state.signInOrOut.calendarData,
-  date: state.signInOrOut.date
+  isSignIn: state.redux.isSignIn,
+  modal: state.redux.modal,
+  calendarData: state.redux.calendarData,
+  date: state.redux.date
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -117,4 +116,3 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainPage);
-//  && !this.props.isSignIn

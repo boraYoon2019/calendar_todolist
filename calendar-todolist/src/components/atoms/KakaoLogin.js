@@ -41,4 +41,4 @@ function KakaoLogin (props){
 		);
 }
 
-export default KakaoLogin;
+export default React.memo(KakaoLogin);

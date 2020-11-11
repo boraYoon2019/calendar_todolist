@@ -30,6 +30,7 @@ const H2Title = styled.h2`
   padding: 0 .7em .8em .7em;
   font-size: 1.5rem;
   text-align: center;
+  color: ${props => props.color!==undefined? props.color : '#111'};
 `;
 
 
@@ -64,7 +65,7 @@ function Title(props) {
     default:
       return (
         <>
-          <H2Title onClick={props.onClick}>{props.children}</H2Title>
+          <H2Title onClick={props.onClick} color={props.color}>{props.children}</H2Title>
         </>
       );
   }

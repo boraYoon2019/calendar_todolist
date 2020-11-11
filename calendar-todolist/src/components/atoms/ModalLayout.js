@@ -17,4 +17,4 @@ function ModalLayout(props) {
       );
 }
 
-export default ModalLayout;
+export default React.memo(ModalLayout);
