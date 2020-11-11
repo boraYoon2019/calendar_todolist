@@ -1,6 +1,6 @@
 import React from 'react';
 import ModalTemplate from '../templates/ModalTemplate';
-import SignInModal from '../organisms/SignInModal';
+import SignInModal from '../organisms/Modal';
 
 import { connect } from 'react-redux'
 import * as actions from '../../modules/signInOrOut';

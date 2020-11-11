@@ -7,6 +7,13 @@ import Form from '../atoms/Form';
 import Title from '../atoms/Title';
 import Xbutton from '../atoms/Xbutton';
 
+import styled from 'styled-components';
+
+const Content = styled.p`
+  width: 100%;
+  font-size: 1.2rem;
+  word-break: keep-all;
+`;
 class SignInModal extends React.Component {
 
   constructor() {
@@ -102,7 +109,8 @@ class SignInModal extends React.Component {
   }
 
   componentDidMount() {
-    alert('현재 카카오 로그인과 차트는 서버쪽 로직이 구현되지 않아 동작하지 않습니다. 참고 부탁드립니다!');
+    // alert('현재 카카오 로그인과 차트는 서버쪽 로직이 구현되지 않아 동작하지 않습니다. 참고 부탁드립니다! 회원가입없이 이용해보시려면 ID: admin / PW: 123 을 통해 로그인 가능합니다');
+    console.log('모달 포탈?');
   }
   
 render() {
@@ -128,7 +136,7 @@ render() {
           </Form>          
         </ModalLayout>
       );
-    default:
+    case 'BEFORE_SIGN_IN':
       return (
         <ModalLayout>        
           <Xbutton onClick={onXClick}/>
@@ -148,8 +156,20 @@ render() {
             ></SocialLogin>          
         </ModalLayout>
       );
+      default:
+        return (
+          <ModalLayout>        
+            <Xbutton onClick={onXClick}/>
+              <Title type='h2'>INFORMATION</Title>
+              <Content>
+              안녕하세요! 반갑습니다. 😊<br></br>
+              현재 카카오 로그인과 차트는 서버쪽 로직이 구현되지 않아 동작하지 않습니다.
+              참고 부탁드립니다! 회원가입없이 이용해보시려면<br></br>　
+              <b>ID: admin / PW: 123</b><br></br>
+              으로 로그인이 가능합니다. 🥰</Content>
+          </ModalLayout>
+        );
     }
   }
-
 }
 export default SignInModal;

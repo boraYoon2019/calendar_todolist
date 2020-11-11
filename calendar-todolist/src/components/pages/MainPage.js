@@ -3,6 +3,9 @@ import MainTemplate from '../templates/MainTemplate';
 import Header from '../organisms/Header';
 import BigCalendar from '../organisms/BigCalendar';
 import Charts from '../organisms/Charts';
+import ModalTemplate from '../templates/ModalTemplate';
+import ModalPortal from '../../ModalPortal';
+import SignInModal from '../organisms/Modal';
 
 // 리덕스
 import { connect } from 'react-redux'
@@ -14,6 +17,9 @@ class MainPage extends PureComponent {
 
   constructor() {
     super();
+    this.state = {
+      first: true
+    };
     this.handleCalendarDataChange = this.handleCalendarDataChange.bind(this);
     this.onSelectEvent = this.onSelectEvent.bind(this);
     this.logout = this.logout.bind(this);
@@ -25,6 +31,7 @@ class MainPage extends PureComponent {
     if(localStorage.getItem('token')!==null) {
       this.handleCalendarDataChange(date, 'login');
     }
+    console.log(this.state.first);
   }
 
   handleCalendarDataChange(stringDate, when) {
@@ -43,8 +50,9 @@ class MainPage extends PureComponent {
   }
   
   render() {
-
+    const {first} = this.state;
     return (
+      <>
       <MainTemplate 
         headerSection={
           <Header 
@@ -72,7 +80,23 @@ class MainPage extends PureComponent {
         />
         {this.props.isSignIn && (<Charts onRangeChange={(data)=>{}}/>)}
       </MainTemplate>
-      );
+      {(first && !this.props.isSignIn) && (             
+          <ModalPortal>
+            <ModalTemplate>   
+              <SignInModal 
+                onXClick={
+                  ()=> {
+                    this.setState({
+                      first: false
+                    });
+                  }
+                }
+              />
+            </ModalTemplate>
+          </ModalPortal>
+      )}{' '}
+      </>
+    );
   }
 }
 
@@ -93,3 +117,4 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainPage);
+//  && !this.props.isSignIn
