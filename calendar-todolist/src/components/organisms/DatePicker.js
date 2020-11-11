@@ -26,6 +26,10 @@ export default class DatePicker extends Component {
     this.setState({ focused });
   }
 
+  componentDidMount() {
+    console.log('componentDidMount');
+    console.log(this.props.date);
+  }
 
   render() {
     const { focused } = this.state;

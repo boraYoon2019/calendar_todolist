@@ -7,7 +7,7 @@ export const getTodolists_byDate = (type, promiseCreator) => {
   const [SUCCESS, ERROR, LOGIN_ERROR] = [`${type}_SUCCESS`, `${type}_ERROR`, `${type}_LOGIN_ERROR`];
 
   return function* listSaga(action) {
-    
+
     try {
       const payload = yield call(promiseCreator, action.date);
       
@@ -42,7 +42,7 @@ export const addTodolist_withList = (type, promiseCreator) => {
   const [SUCCESS, ERROR] = [`${type}_SUCCESS`, `${type}_ERROR`];
 
   return function* addListSaga(action) {
-    
+
     try {
       
       const payload = yield call(promiseCreator, action.list);
@@ -150,7 +150,6 @@ export const handle_getLists_actions = (type, key) => {
       case SUCCESS:
         return {
           ...state,
-          date : moment(new Date(action.date)).format('YYYY-MM-DD'),
           [key]: postReducerUtils.success(action.payload.reverse())
         };
       case ERROR:
@@ -165,7 +164,10 @@ export const handle_getLists_actions = (type, key) => {
           isSignIn : false
         }
       default:
-        return state;
+        return {
+          ...state,
+          date : moment(new Date(action.date)).format('YYYY-MM-DD')
+        };
     }
   };
 };

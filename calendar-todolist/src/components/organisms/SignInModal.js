@@ -100,6 +100,10 @@ class SignInModal extends React.Component {
     }
     this.props.onSignIn(event, this.state.id, this.state.password);
   }
+
+  componentDidMount() {
+    alert('현재 카카오 로그인과 차트는 서버쪽 로직이 구현되지 않아 동작하지 않습니다. 참고 부탁드립니다!');
+  }
   
 render() {
   const { onXClick, status, goJoin, socialLoginOnSuccess, socialLoginOnFailure} = this.props;

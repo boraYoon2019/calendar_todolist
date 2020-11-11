@@ -11,6 +11,7 @@ const Layout = styled.div`
   padding: 2.5em 1.5em 0 1.5em;
   display: ${props => props.display};
   flex-flow: column nowrap;
+  align-self: flex-start;
 `;
 
 function EditText(props) {
@@ -23,7 +24,7 @@ function EditText(props) {
   useEffect(() => {
     if (comparedStandard.current !== props.title) {
       setValue(props.value);
-      setReadOnly(true);      
+      setReadOnly(true);
       comparedStandard.current=props.title;
     }
   });
@@ -34,7 +35,9 @@ function EditText(props) {
   }
 
   function onClickTextArea(event) {
-    setReadOnly(!readOnly);
+    if(readOnly) {
+      setReadOnly(!readOnly);
+    }
   }
 
   function onFinishEdit() {
@@ -53,7 +56,7 @@ function EditText(props) {
             onClick={onClickTextArea} 
             readOnly={readOnly}
             onChange={handleChange}
-            placeholder={props.type ==='feedback'? '오늘의 피드백을 적어보세요 :) 클릭하면 수정할 수 있어요.' : '상세 계획을 적어보세요. :) 클릭하면 수정할 수 있어요.'}
+            placeholder={props.type ==='feedback'? "오늘의 피드백을 적어보세요 :) 클릭하면 수정할 수 있어요." : "상세 계획을 적어보세요. :) 클릭하면 수정할 수 있어요." }
           />
         </Label>
         {!readOnly && (
