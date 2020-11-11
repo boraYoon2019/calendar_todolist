@@ -4,7 +4,7 @@ import WritingTodolist from '../organisms/WritingTodolist';
 import Todolist from '../organisms/Todolist';
 import Header from '../organisms/Header';
 import DatePicker from '../organisms/DatePicker';
-import EditText from '../organisms/EditText';
+
 // 리덕스
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -77,7 +77,9 @@ function WritingPage(props) {
   const makeList = (noDateList) => {
     const list = noDateList;
     list.start_at=signInOrOut.date;
+    // console.log(list.start_at);
     list.end_at=signInOrOut.date;
+    // console.log(list);
 
     dispatch(addTodolist(list));
   }

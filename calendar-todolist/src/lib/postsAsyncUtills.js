@@ -180,7 +180,6 @@ export const handle_addList_actions = (type) => {
         const body = document.querySelector('body');
         const scrollPos = body.scrollHeight-400;
         window.setTimeout(()=>{window.scrollTo({ top: scrollPos, behavior: 'smooth' });}, 200);
-        
         return {
           ...state,
           todolists: postReducerUtils.success(state.todolists.data.concat(action.list))

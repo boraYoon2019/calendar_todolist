@@ -8,7 +8,7 @@ export const getTodolists = async date => {
     const token = localStorage.getItem('token');
 
     const dateString = moment(new Date(date)).format('YYYY-MM-DD').toString();
-
+    // console.log(dateString);
       const response = await fetch(`http://15.165.223.171:8000/api/posts/?search=${dateString}`,
       {
         method: 'GET',
@@ -103,6 +103,8 @@ export const addTodolist = async todolist_jsonObject => {
       // const refinedItemData = 
 
       refinedData.comments = todolistItems_jsonArray;
+      
+      // console.log(refinedData);
       return refinedData;
 };
 

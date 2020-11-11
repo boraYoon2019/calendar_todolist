@@ -21,7 +21,7 @@ class MainPage extends PureComponent {
 
   componentDidMount() {
     const date = new Date();
-    
+    // console.log(localStorage.getItem('token'));
     if(localStorage.getItem('token')!==null) {
       this.handleCalendarDataChange(date, 'login');
     }
