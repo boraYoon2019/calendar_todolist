@@ -66,22 +66,6 @@ export const signIn = (type, promiseCreator) => {
   };
 };
 
-// 여러 유틸 함수들.
-export const userReducerUtils = {
-  initial: (initialData = null) => ({
-    result: initialData
-  }),
-  // 성공 상태
-  success: payload => ({
-    result: payload
-  }),
-
-  // 실패 상태
-  error: error => ({
-    result: null
-  })
-};
-
 
 export const handle_join_actions = (type, key) => {
   const [SUCCESS, ERROR] = [`${type}_SUCCESS`, `${type}_ERROR`];
@@ -93,12 +77,10 @@ export const handle_join_actions = (type, key) => {
         return {
           ...state,
           modal: false,
-          [key]: userReducerUtils.success(action.payload)
         };
       case ERROR:
         return {
-          ...state,
-          [key]: userReducerUtils.error(action.payload)
+          ...state
         };
       default:
         return state;

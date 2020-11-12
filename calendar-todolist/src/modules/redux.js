@@ -161,7 +161,6 @@ export function* saga() {
 const initialState = {
   isSignIn: false,
   modal: false,
-  join: userReducerUtils.initial(),
   calendarData: dataReducerUtils.initial(),
   date: moment(new Date()),
   todolists: postReducerUtils.initial()

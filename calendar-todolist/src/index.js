@@ -19,13 +19,13 @@ const sagaMiddleware = createSagaMiddleware({
   context: {
     history: customHistory
   }
-}); // 사가 미들웨어를 만들어서,
+});
 
 const store = createStore(
   rootReducer, 
   composeWithDevTools(
     applyMiddleware(
-      sagaMiddleware // 사가 미들웨어 적용
+      sagaMiddleware
     )
   )
 ); // 스토어를 리덕스 개발자 도구를 추가해 만듬.
