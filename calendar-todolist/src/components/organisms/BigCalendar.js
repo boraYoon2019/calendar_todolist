@@ -31,10 +31,7 @@ eventStyleGetter() {
 				onRangeChange={this.props.onRangeChange}
 				eventPropGetter={this.eventStyleGetter}
 				events={this.props.events}
-				getDrilldownView={(targetDate, currentViewName, configuredViewNames) => {
-					return null;
-				}
-				}
+				onDrillDown={(e)=>{this.props.onSelectEvent({start: e})}}
 				style={{ width:'100%', height:'80vh', margin:10, zIndex:0 }}
 			/>
 		);
