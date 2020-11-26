@@ -63,8 +63,6 @@ class WritingTodolist extends PureComponent {
       }
 
       const list = Object.assign({}, this.state.list);
-      console.log(list===this.state.list);
-      console.log(list==this.state.list);
       this.setState({ list: this.state.list.concat(
         {
           "id": list.length>0? list[list.length-1].id+1 : 0,

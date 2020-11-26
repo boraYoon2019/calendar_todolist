@@ -11,7 +11,6 @@ import SignInModal from '../organisms/Modal';
 import { connect } from 'react-redux'
 import * as actions from '../../modules/redux';
 
-'use strict';
 // 리덕스 스토어의 상태를 조회하거나, 액션을 디스패치 할 수 있는 컴포넌트.
 class MainPage extends PureComponent {
 
@@ -26,17 +25,16 @@ class MainPage extends PureComponent {
   }
 
   componentDidMount() {
+    console.log('MainPage componentDidMount');
     const date = new Date();
     if(localStorage.getItem('token')!==null) {
       this.handleCalendarDataChange(date, 'login');
     }
+    this.setState({first:false});
   }
   
   componentDidUpdate() {
-    const date = new Date();
-    if(localStorage.getItem('token')!==null) {
-      this.handleCalendarDataChange(date, 'login');
-    }
+    console.log('MainPage componentDidUpdate');
   }
 
   handleCalendarDataChange(stringDate, when) {
@@ -58,6 +56,21 @@ class MainPage extends PureComponent {
     const {first} = this.state;
     return (
       <>
+      {(first && !this.props.isSignIn) && (
+        <ModalPortal>
+          <ModalTemplate>   
+            <SignInModal 
+              onXClick={
+                ()=> {
+                  this.setState({
+                    first: false
+                  });
+                }
+              }
+            />
+          </ModalTemplate>
+        </ModalPortal>
+      )}{' '}
       <MainTemplate 
         headerSection={
           <Header 
@@ -85,21 +98,6 @@ class MainPage extends PureComponent {
         />
         {this.props.isSignIn && (<Charts onRangeChange={(data)=>{}}/>)}
       </MainTemplate>
-      {(first && !this.props.isSignIn) && (
-          <ModalPortal>
-            <ModalTemplate>   
-              <SignInModal 
-                onXClick={
-                  ()=> {
-                    this.setState({
-                      first: false
-                    });
-                  }
-                }
-              />
-            </ModalTemplate>
-          </ModalPortal>
-      )}{' '}
       </>
     );
   }
