@@ -27,7 +27,13 @@ class MainPage extends PureComponent {
 
   componentDidMount() {
     const date = new Date();
-    // console.log(localStorage.getItem('token'));
+    if(localStorage.getItem('token')!==null) {
+      this.handleCalendarDataChange(date, 'login');
+    }
+  }
+  
+  componentDidUpdate() {
+    const date = new Date();
     if(localStorage.getItem('token')!==null) {
       this.handleCalendarDataChange(date, 'login');
     }
@@ -79,7 +85,7 @@ class MainPage extends PureComponent {
         />
         {this.props.isSignIn && (<Charts onRangeChange={(data)=>{}}/>)}
       </MainTemplate>
-      {(first && !this.props.isSignIn) && (             
+      {(first && !this.props.isSignIn) && (
           <ModalPortal>
             <ModalTemplate>   
               <SignInModal 

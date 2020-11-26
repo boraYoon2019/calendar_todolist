@@ -182,9 +182,11 @@ export const handle_addList_actions = (type) => {
         const body = document.querySelector('body');
         const scrollPos = body.scrollHeight-400;
         window.setTimeout(()=>{window.scrollTo({ top: scrollPos, behavior: 'smooth' });}, 200);
+        const newData = state.todolists.data.concat(action.list);
+        
         return {
           ...state,
-          todolists: postReducerUtils.success(state.todolists.data.concat(action.list))
+          todolists: postReducerUtils.success(newData)
         };
       case ERROR:
         return {
@@ -206,11 +208,8 @@ export const handle_deleteList_actions = (type) => {
       case SUCCESS:
         // 리스트 변경해주기
         const index = state.todolists.data.findIndex(listObject => listObject.id == action.id);
-        // console.log(index);
         const newData = state.todolists.data.slice();
-        // console.log(newData);
         newData.splice(index, 1);
-        // console.log(newData);
         return {
           ...state,
           todolists: postReducerUtils.success(newData)
@@ -236,7 +235,7 @@ export const handle_deleteItem_actions = (type) => {
         // 먼저 slice 
         // 해당 리스트 id로 인덱스 찾아서, 안에 코멘트 배열 선택 후, 배열의 id로 인덱스 찾아서,
         // 해당 아이템만 제거해 주기
-        // 해당 newData로 변경        
+        // 해당 newData로 변경
         const listIndex = state.todolists.data.findIndex(listObject => listObject.id == action.todolistId);
         const newData = state.todolists.data.slice();
         const itemIndex = newData[listIndex].comments.findIndex(listObject => listObject.id == action.itemId);

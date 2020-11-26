@@ -8,7 +8,7 @@ export const joinIn = async (action) => {
 
     const response = await fetch(`http://15.165.223.171:8000/accounts/signup/`,
     {
-        method: 'POST', // *GET, POST, PUT, DELETE, etc.
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Accept' : 'application/json'
@@ -41,7 +41,7 @@ export const signIn = async (action) => {
     
     const response = await fetch(`http://15.165.223.171:8000/accounts/login/`,
       {
-        method: 'POST', // *GET, POST, PUT, DELETE, etc.
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Accept' : 'application/json'

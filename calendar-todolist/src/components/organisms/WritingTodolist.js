@@ -7,8 +7,6 @@ import ListItem from '../molecules/ListItem';
 import Button from '../atoms/Button';
 import CircleButton from '../atoms/CircleButton';
 import FlexContainer from '../atoms/FlexContainer';
-'use strict!'
-
 class WritingTodolist extends PureComponent {
 
   constructor() {
@@ -64,10 +62,11 @@ class WritingTodolist extends PureComponent {
         return;
       }
 
-      const list = this.state.list;      
+      const list = Object.assign({}, this.state.list);
+      console.log(list===this.state.list);
+      console.log(list==this.state.list);
       this.setState({ list: this.state.list.concat(
         {
-          
           "id": list.length>0? list[list.length-1].id+1 : 0,
           "detail_title": event.target.value,
           "detail_context": "",
@@ -114,13 +113,11 @@ class WritingTodolist extends PureComponent {
 	render() {
 
     const {
-      makeList, 
       handleTitleChange, 
       handleItemChange, 
       addTodolistItem, 
       addTodolistItemByEnter,
       deletelistItem,
-      noKeyPress
     } = this;
 
     const { list, listItem, title} = this.state;

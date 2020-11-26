@@ -1,4 +1,4 @@
-import React, { useState }  from 'react';
+import React, { useState,useEffect,useRef }  from 'react';
 import styled from 'styled-components';
 import XButton from '../atoms/Xbutton';
 import Checkbox from '../atoms/Checkbox';
@@ -21,7 +21,6 @@ const Item = styled.li`
     padding: .3em;
     font-size: 1rem;
   }
-
 `;
 
 const Text = styled.p`
@@ -51,24 +50,21 @@ const InputText = styled.label`
 
 function ListItem(props){
   	
-	const [checked, setChecked] = useState(props.checked);
-	// const [active, setActive] = useState(false);
-
+  const initialRendering = useRef(true);
+  
 	const onChange = (event) => {
-    setChecked(event.target.checked);
     props.onChangeChecked(event);
   }
   
   const onItemTextClick = (event) => {
     props.onItemClick(event);
-    // setActive(!active);
   }
 
   if (props.checkbox) {
     return (
       <Item active={props.active}>
-        <Checkbox type='checkbox' checked={checked} value={props.value} onChange={onChange}/>
-        <Text onClick={onItemTextClick} checked={checked}>{props.children}</Text>
+        <Checkbox type='checkbox' checked={props.checked} value={props.value} onChange={onChange}/>
+        <Text onClick={onItemTextClick} checked={props.checked}>{props.children}</Text>
         <XButton inItem value={props.id} onClick={props.onXClick}/>
       </Item>
     );
